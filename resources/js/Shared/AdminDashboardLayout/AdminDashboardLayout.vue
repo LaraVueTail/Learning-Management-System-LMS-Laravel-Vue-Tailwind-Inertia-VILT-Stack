@@ -14,7 +14,7 @@ import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import Navbar from "./Components/Navbar.vue";
 import Sidebar from "./Components/Sidebar.vue";
-import { ChartPieIcon,CogIcon,ArrowRightOnRectangleIcon } from "@heroicons/vue/24/solid"
+import { ChartPieIcon,CogIcon,ArrowRightOnRectangleIcon,DocumentTextIcon } from "@heroicons/vue/24/solid"
 // initialize components based on data attribute selectors
 onMounted(() => {
     initFlowbite();
@@ -49,14 +49,18 @@ export default {
                     icon: ChartPieIcon,
                 },
                 {
-                    name: 'Settings',
-                    link: '/admin-dashboard/settings',
+                    name: 'Posts',
+                    link: '/admin-dashboard/posts',
                     method: 'get',
-                    icon: CogIcon,
+                    icon: DocumentTextIcon,
                     subMenu: [
                         {
-                            name:'submenu1',
-                            link:'/',
+                            name:'Create New Post',
+                            link:'/admin-dashboard/posts/create',
+                        },
+                        {
+                            name:'All Posts',
+                            link:'/admin-dashboard/posts',
                         }
                     ]
                 },
