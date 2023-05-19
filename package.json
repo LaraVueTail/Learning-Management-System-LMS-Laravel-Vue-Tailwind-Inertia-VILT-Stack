@@ -15,9 +15,10 @@
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.13",
-        "@heroicons/vue": "^1.0.6",
+        "@heroicons/vue": "^2.0.18",
         "@inertiajs/vue3": "^1.0.6",
         "@vitejs/plugin-vue": "^4.2.3",
+        "@vue-hero-icons/solid": "^1.7.2",
         "flowbite": "^1.6.5"
     }
 }
