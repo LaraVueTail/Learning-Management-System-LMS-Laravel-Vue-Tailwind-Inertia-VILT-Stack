@@ -1,10 +1,11 @@
 <template>
+    <Notification></Notification>
     <Navbar :siteLogo="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :siteName="'Flowbite'"
         :userAvatar="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :userName="'Ameerali C'"
         :userEmail="'example@email.com'" :navMenu="navMenu"></Navbar>
     <Sidebar :sidebarMenu="sidebarMenu"></Sidebar>
     <div class="p-4 sm:ml-64">
-        <div class="p-4 mt-14">
+        <div class="p-4 mt-14 min-h-screen">
             <slot></slot>
         </div>
     </div>
@@ -14,6 +15,7 @@ import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import Navbar from "./Components/Navbar.vue";
 import Sidebar from "./Components/Sidebar.vue";
+import Notification from "./Components/Notification.vue";
 import { ChartPieIcon,CogIcon,ArrowRightOnRectangleIcon,DocumentTextIcon } from "@heroicons/vue/24/solid"
 // initialize components based on data attribute selectors
 onMounted(() => {

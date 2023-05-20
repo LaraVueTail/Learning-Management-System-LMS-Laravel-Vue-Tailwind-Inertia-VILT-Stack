@@ -19,6 +19,7 @@
         "@inertiajs/vue3": "^1.0.6",
         "@vitejs/plugin-vue": "^4.2.3",
         "@vue-hero-icons/solid": "^1.7.2",
+        "@vueup/vue-quill": "^1.2.0",
         "flowbite": "^1.6.5"
     }
 }
