@@ -5,7 +5,7 @@
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ heading }}</h2>
           <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">{{ subHeading }}</p>
       </div> 
-      <div class="grid gap-8" :class="`lg:grid-cols-${columns}`">
+      <div class="grid gap-4" :class="`lg:grid-cols-2`">
         <Grid :posts="posts.data"></Grid>
       </div> 
       <div class="mx-auto max-w-screen-sm my-10">

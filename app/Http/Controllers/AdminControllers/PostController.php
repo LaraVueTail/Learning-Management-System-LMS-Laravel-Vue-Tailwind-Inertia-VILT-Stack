@@ -22,6 +22,12 @@ class PostController extends Controller
             'filters' => Request::only(['search', 'sortBy', 'category','status', 'dateStart', 'dateEnd'])
         ]);
     }
+    public function show(Post $post)
+    {
+        return Inertia::render('Public/Posts/Show',[
+            'post'=>$post
+        ]);
+    }
     public function create()
     {
         return Inertia::render('AdminDashboard/Posts/Create',[

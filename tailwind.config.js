@@ -12,6 +12,9 @@ export default {
                 poppins: ["Poppins", "sans-serif"],
             },
             colors: {
+                laravel: '#ff2d20',
+                vue:'#41b883',
+                tailwind:'#38bdf8',
                 primary: {
                     50: "#eff6ff",
                     100: "#dbeafe",

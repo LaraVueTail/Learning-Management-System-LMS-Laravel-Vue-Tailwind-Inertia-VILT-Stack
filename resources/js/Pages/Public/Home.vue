@@ -1,6 +1,6 @@
 <template>
     <Hero></Hero>
-    <Posts :noColumn="2" :heading="'Our Blog'" :subHeading="'This is sub Heading'" :posts="posts"></Posts>
+    <Posts :noColumn="2" :heading="'Blog Posts'" :subHeading="'Checkout our sample posts.'" :posts="posts"></Posts>
 </template>
 <script>
 export default {

@@ -20,6 +20,7 @@ use Inertia\Inertia;
 
  Route::name('public.')->group(function () {
     Route::get('/', [PublicPagesController::class, 'homePage'])->name('home');
+    Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');
     Route::name('account.')->group(function(){
         Route::get('login', [UserController::class, 'login'])->middleware('guest')->name('login');
         Route::post('login', [UserController::class, 'auth'])->middleware('guest');
