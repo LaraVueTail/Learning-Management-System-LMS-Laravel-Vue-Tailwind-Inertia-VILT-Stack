@@ -1,7 +1,8 @@
 <template>
     <div
-        class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+        class="fixed top-24 right-10 flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 z-30 shadow-xl"
         role="alert"
+        v-if="show && flash.success"
     >
         <svg
             aria-hidden="true"
@@ -18,8 +19,35 @@
         </svg>
         <span class="sr-only">Info</span>
         <div>
-            <span class="font-medium">Success!</span> {{ $page.props.flash.success }}
+            <span class="font-medium">Success!</span>
+            {{ $page.props.flash.success }}
         </div>
     </div>
 </template>
-<script></script>
+<script>
+export default {
+    data() {
+        return {
+            show: false,
+        };
+    },
+    mounted() {
+        this.show = true;
+        setTimeout(() => (this.show = false), 2000);
+    },
+    computed: {
+        flash() {
+            return this.$page.props.flash;
+        },
+    },
+    watch: {
+        flash: {
+            deep: true,
+            handler(val, oldVal) {
+                this.show = true;
+                setTimeout(() => (this.show = false), 2000);
+            },
+        },
+    },
+};
+</script>

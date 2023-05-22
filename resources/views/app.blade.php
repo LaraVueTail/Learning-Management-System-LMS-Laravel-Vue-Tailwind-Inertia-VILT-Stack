@@ -9,7 +9,6 @@
   </head>
   <body>
     @inertia
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/datepicker.min.js"></script> --}}
-    {{-- <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.4.14",
+        "lodash": "^4.17.21",
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.7.5",
         "postcss": "^8.4.23",
@@ -20,6 +21,7 @@
         "@vitejs/plugin-vue": "^4.2.3",
         "@vue-hero-icons/solid": "^1.7.2",
         "@vueup/vue-quill": "^1.2.0",
-        "flowbite": "^1.6.5"
+        "flowbite": "^1.6.5",
+        "flowbite-datepicker": "^1.2.2"
     }
 }

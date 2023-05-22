@@ -32,12 +32,12 @@
                 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
             >
             <div class="flex gap-2">
-              <div class="flex text-gray-50 hover:text-black gap-1 items-center" @click="$refs.fileInputSingle.click()">
+              <div class="flex text-white hover:text-black gap-1 items-center py-1 px-4 bg-blue-600 hover:bg-white rounded-full shadow-lg" @click="$refs.fileInputSingle.click()">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        class="w-5 h-5"
+                        class="w-4 h-4"
                     >
                         <path
                             d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z"
@@ -53,7 +53,7 @@
                         class="text-sm"
                     ></p>
                 </div>
-                <div class="flex text-gray-50 hover:text-red-500 gap-1 items-center" @click="fileRemoved()" v-if="addedFile || oldImage">
+                <!-- <div class="flex text-gray-50 hover:text-red-500 gap-1 items-center" @click="fileRemoved()" v-if="addedFile || oldImage">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -75,12 +75,12 @@
                         "
                         class="text-sm"
                     ></p>
-                </div>
+                </div> -->
             </div>
 
             </div>
             <div
-                class="bg-contain bg-center bg-no-repeat w-full h-full border-dashed border-2 border-gray-300 bg-gray-500"
+                class="bg-contain bg-center bg-no-repeat w-full h-full border-dashed border-2 border-gray-200 bg-gray-100"
                 :class="{ 'rounded-full': rounded, 'rounded-lg': !rounded, 'saturate-50 bg-blend-overlay bg-gray-900/75 shadow-2xl' : (addedFile || oldImage)}"
                 :style="`background-image: url(${uploadedFile()})`"
             ></div>

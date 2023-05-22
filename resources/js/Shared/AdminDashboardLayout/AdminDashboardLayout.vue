@@ -4,8 +4,8 @@
         :userAvatar="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :userName="'Ameerali C'"
         :userEmail="'example@email.com'" :navMenu="navMenu"></Navbar>
     <Sidebar :sidebarMenu="sidebarMenu"></Sidebar>
-    <div class="p-4 sm:ml-64">
-        <div class="p-4 mt-14 min-h-screen">
+    <div class="md:px-4 py-4 sm:ml-64">
+        <div class="md:px-4 py-4 mt-14 min-h-screen">
             <slot></slot>
         </div>
     </div>
@@ -57,7 +57,7 @@ export default {
                     icon: DocumentTextIcon,
                     subMenu: [
                         {
-                            name:'Create New Post',
+                            name:'Create',
                             link:'/admin-dashboard/posts/create',
                         },
                         {

@@ -7,6 +7,12 @@
         class="w-full px-2 md:px-4 pt-4 pb-24 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
         <div class="relative w-full max-w-5xl max-h-full">
+            <DeleteAlert
+                v-if="deleteAlertPost"
+                @close="deleteAlertPost = false"
+                @confirm="deletePostConfirm()"
+                :text="deleteAlertPostText"
+            ></DeleteAlert>
             <!-- Modal content -->
             <div
                 class="relative bg-white rounded-lg shadow-xl dark:bg-gray-700"
@@ -15,7 +21,7 @@
                 <div
                     class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
                 >
-                    <h2>Create New Post</h2>
+                    <h2>Edit Post</h2>
                     <button
                         type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -120,9 +126,14 @@
                     class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
                 >
                     <Button
-                        @click.prevent="createPost()"
-                        :text="'Create Post'"
+                        @click.prevent="editPost()"
+                        :text="'Edit Post'"
                         :color="'blue'"
+                    ></Button>
+                    <Button
+                        @click.prevent="deletePost()"
+                        :text="'Delete Post'"
+                        :color="'red'"
                     ></Button>
                 </div>
             </div>
@@ -133,11 +144,14 @@
 import { router } from "@inertiajs/vue3";
 
 export default {
-    props: ["categories","errors"],
+    props: ["post", "categories", "errors"],
     data() {
         return {
-            postInfo: {},
+            deleteAlertPost: false,
+            deleteAlertPostText: "",
+            postInfo: this.post,
             thumbnail: null,
+            oldThumbnail: this.post.thumbnail_url,
             statuses: [
                 {
                     name: "Published",
@@ -169,17 +183,33 @@ export default {
                 this.postInfo.slug = this.slugify(this.postInfo.heading);
             }
         },
-        createPost() {
+        deletePost() {
+            window.scrollTo(0, 0);
+            this.deleteAlertPost = true;
+            this.deleteAlertPostText = `Deleting the post will permanently removed from the database. You can't recover the
+        post again. Are you sure about deleting?`;
+            setTimeout(() => (this.deleteAlertPost = false), 5000);
+        },
+        deletePostConfirm() {
+            router.delete(`/admin-dashboard/posts/${this.post.id}`);
+        },
+        editPost() {
             if (this.thumbnail) {
                 this.postInfo.thumbnail = this.thumbnail;
+                this.oldThumbnail = URL.createObjectURL(this.thumbnail);
             } else {
                 delete this.postInfo.thumbnail;
             }
-            router.post("/admin-dashboard/posts", this.postInfo, {
-                preserveState: true,
-                preserveScroll: true,
-                only: ["flash","errors"],
-            });
+            this.postInfo._method = "put";
+            router.post(
+                `/admin-dashboard/posts/${this.post.id}`,
+                this.postInfo,
+                {
+                    preserveState: false,
+                    preserveScroll: true,
+                    only: ["post", "flash", "errors"],
+                }
+            );
         },
     },
 };
@@ -190,5 +220,6 @@ import FormSimpleInput from "../../../Shared/FormElements/FormSimpleInput.vue";
 import FormTextEditor from "../../../Shared/FormElements/FormTextEditor.vue";
 import FormFileUploadSingle from "../../../Shared/FormElements/FormFileUploadSingle.vue";
 import FormSelect from "../../../Shared/FormElements/FormSelect.vue";
-import Errors from '../../../Shared/FormElements/Errors.vue';
+import Errors from "../../../Shared/FormElements/Errors.vue";
+import DeleteAlert from "../../../Shared/DeleteAlert.vue";
 </script>

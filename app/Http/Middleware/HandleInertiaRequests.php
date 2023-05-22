@@ -38,6 +38,10 @@ class HandleInertiaRequests extends Middleware
     {
         $sharedData = array(
             'csrf_token' => csrf_token(),
+            'admin' => [
+                'email' => config('admin.email'),
+                'name' => config('admin.name'),
+            ],
             'flash' => [
                 'success' => fn () => $request->session()->get('success')
             ]);

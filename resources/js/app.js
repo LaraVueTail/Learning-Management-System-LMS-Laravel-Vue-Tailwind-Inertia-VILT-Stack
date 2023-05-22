@@ -1,6 +1,8 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp, Link } from '@inertiajs/vue3'
-import AdminDashboardLayout from './Shared/AdminDashboardLayout/AdminDashboardLayout.vue'
+import AdminDashboardLayout from './Shared/AdminDashboardLayout/AdminDashboardLayout.vue';
+import PublicPagesLayout from './Shared/PublicPagesLayout/PublicPagesLayout.vue';
+
 
 createInertiaApp({
   resolve: name => {
@@ -8,6 +10,9 @@ createInertiaApp({
     let page = pages[`./Pages/${name}.vue`];
     if (name.startsWith("AdminDashboard/")) {
       page.default.layout = AdminDashboardLayout;
+    }
+    if (name.startsWith("Public/")) {
+      page.default.layout = PublicPagesLayout;
     }
     return page;
   },
