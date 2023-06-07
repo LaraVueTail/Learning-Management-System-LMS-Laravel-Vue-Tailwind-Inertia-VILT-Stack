@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminControllers\StudentController;
+use App\Http\Controllers\AdminControllers\ChapterController;
+use App\Http\Controllers\AdminControllers\CourseController;
 use App\Http\Controllers\AdminControllers\DashboardController;
+use App\Http\Controllers\AdminControllers\TeacherController;
 use App\Http\Controllers\AdminControllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserController;
@@ -22,7 +26,7 @@ use Inertia\Inertia;
     Route::get('/', [PublicPagesController::class, 'homePage'])->name('home');
     Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');
     Route::name('account.')->group(function(){
-        Route::get('login', [UserController::class, 'login'])->middleware('guest')->name('login');
+        Route::get('login', [UserController::class, 'login'])->middleware('guest:web,teacher')->name('login');
         Route::post('login', [UserController::class, 'auth'])->middleware('guest');
         Route::post('logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
         Route::get('register', [UserController::class, 'create'])->middleware('guest')->name('register');
@@ -31,10 +35,14 @@ use Inertia\Inertia;
 });
 
 Route::name('admin.')->group(function(){
-    Route::middleware(['auth','can:admin'])->group(function(){
+    Route::middleware(['auth:teacher','admin_check'])->group(function(){
         Route::prefix('/admin-dashboard')->group(function () {
             Route::get('/', [DashboardController::class, 'home'])->name('home');
+            Route::resource('/teachers', TeacherController::class)->except('show');
+            Route::resource('/courses', CourseController::class)->except('show');
+            Route::resource('/chapters', ChapterController::class)->except('show');
             Route::resource('/posts', PostController::class)->except('show');
+            Route::resource('/students', StudentController::class)->except('show');
 
         });
     });

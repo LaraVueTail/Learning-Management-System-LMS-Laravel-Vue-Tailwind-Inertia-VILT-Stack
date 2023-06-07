@@ -10,4 +10,11 @@ export default {
 <script setup>
 import Hero from '../../Shared/HomePageContents/Hero.vue'
 import Posts from './Posts/Index.vue';
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+})
 </script>

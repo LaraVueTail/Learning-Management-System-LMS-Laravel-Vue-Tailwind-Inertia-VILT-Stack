@@ -36,7 +36,7 @@
         </button>
         <div
             id="filterDropdown"
-            class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700"
+            class="z-10 hidden p-3 bg-white rounded-lg shadow dark:bg-gray-700 w-fit"
         >
             <div v-for="filter in filterByFiltersEnabled" :key="filter">
                 <h6
@@ -56,8 +56,8 @@
                         <li class="flex items-center">
                             <input
                                 type="checkbox"
-                                :id="option.value"
-                                :value="option.value"
+                                :id="option[filter.valueKey]"
+                                :value="option[filter.valueKey]"
                                 @change="filterByChange()"
                                 v-model="filtersDefault[filter.slug]"
                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
@@ -65,7 +65,7 @@
                             <label
                                 for="unpaid"
                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
-                                >{{ option.name }}</label
+                                >{{ option[filter.nameKey] }}</label
                             >
                         </li>
                     </div>
@@ -164,16 +164,14 @@ export default {
     props: ["filters", "filterByFiltersEnabled"],
     emits: ["filterByFilterChangeEmit"],
     mounted() {
-      this.filterByFiltersEnabled.forEach((filter) => {
-                for (const key in filter) {
-                    if (Object.hasOwnProperty.call(filter, key)) {
-                        if(!this.filtersDefault[filter.slug]) {
-                          this.filtersDefault[filter.slug] = []
-                        }
-                    }
-                }
-            });
-            console.log(this.filtersDefault);
+        this.filterByFiltersEnabled.forEach((filter) => {
+          console.log(filter.slug +'=' + this.filtersDefault[filter.slug]);
+            if (this.filtersDefault[filter.slug]) {
+                this.filtersDefault[filter.slug] = JSON.parse(this.filtersDefault[filter.slug]);
+            } else {
+              this.filtersDefault[filter.slug] = []
+            }
+        });
     },
     data() {
         return {
@@ -198,8 +196,6 @@ export default {
             this.filterByFiltersEnabled.forEach((element) => {
                 for (const key in element) {
                     if (Object.hasOwnProperty.call(element, key)) {
-                        console.log(this.filtersDefault);
-
                         if (this.filtersDefault[element.slug].length > 0) {
                             this.filterByFilterQueries[element.slug] =
                                 JSON.stringify(

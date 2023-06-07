@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
     {
         $sharedData = array(
             'csrf_token' => csrf_token(),
+            'app_url'=> asset('/'),
             'admin' => [
                 'email' => config('admin.email'),
                 'name' => config('admin.name'),

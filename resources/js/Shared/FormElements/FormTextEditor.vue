@@ -5,7 +5,7 @@
       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >{{ label }}</label
     >
-    <div class="grid gap-0 overflow-y-auto">
+    <div class="grid gap-0 overflow-y-auto dark:text-white">
       <QuillEditor
         theme="snow"
         :content="modelValue"

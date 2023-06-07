@@ -14,18 +14,22 @@
         type="checkbox"
         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
       />
-      <label
+      <Link :href="link">
+        <label
         :for="name"
         class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        :class="{'cursor-pointer hover:underline hover:text-blue-500': link}"
         >{{ label }}</label
       >
+      </Link>
+
     </div>
     <div v-if="error" v-text="error" class="text-red-500 text-xs mt-1"></div>
   </div>
 </template>
 <script>
 export default {
-  props: ["label", "modelValue", "error", "name", "disabled", "readOnly", "checked"],
+  props: ["label", "modelValue", "error", "name", "disabled", "readOnly", "checked","link"],
   emits: ["update:modelValue"],
 };
 </script>

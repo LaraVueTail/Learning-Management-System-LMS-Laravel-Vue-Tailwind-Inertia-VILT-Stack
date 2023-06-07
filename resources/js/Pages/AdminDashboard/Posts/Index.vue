@@ -23,6 +23,8 @@
                     {
                         name: 'status',
                         slug: 'status',
+                        valueKey:'value',
+                        nameKey:'name',
                         options: [
                             { name: 'Published', value: 'published' },
                             { name: 'Draft', value: 'draft' },
@@ -76,8 +78,8 @@ export default {
 };
 </script>
 <script setup>
-import PageNavigation from "../../../Shared/PageNavigation.vue";
-import Table from "../../../Shared/Table.vue";
+import PageNavigation from "../../../Shared/Table/PageNavigation.vue";
+import Table from "../../../Shared/Table/Table.vue";
 import Filters from "../../../Shared/Filters/Filters.vue";
 import DeleteAlert from "../../../Shared/DeleteAlert.vue";
 

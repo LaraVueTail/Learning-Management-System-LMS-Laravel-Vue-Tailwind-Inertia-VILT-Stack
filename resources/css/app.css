@@ -11,4 +11,7 @@
     h2 {
       @apply font-poppins text-xl font-semibold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white;
     }
+    h3 {
+      @apply font-poppins text-lg font-medium leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white;
+    }
   }

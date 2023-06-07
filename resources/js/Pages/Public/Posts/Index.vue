@@ -33,6 +33,13 @@ export default {
 };
 </script>
 <script setup>
-import PageNavigation from "../../../Shared/PageNavigation.vue";
+import PageNavigation from "../../../Shared/Table/PageNavigation.vue";
 import Grid from "../../../Shared/Post/Grid.vue";
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+})
 </script>

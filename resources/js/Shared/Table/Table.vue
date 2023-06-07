@@ -7,49 +7,47 @@
                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
             >
                 <tr>
-                    <th
-                        scope="col"
-                        class="px-4 py-3"
-                        v-for="item in tableContent"
-                        :key="item"
-                    >
-                        {{ item.heading }}
-                    </th>
+                    <th scope="col" class="px-4 py-3">ID</th>
+                    <th scope="col" class="px-4 py-3" v-for="item in tableContent" :key="item">{{ item.heading }}</th>
+                    <!-- <th scope="col" class="px-4 py-3">Name</th>
+                    <th scope="col" class="px-4 py-3">Category</th>
+                    <th scope="col" class="px-4 py-3">Price</th>
+                    <th scope="col" class="px-4 py-3">Brand</th>
+                    <th scope="col" class="px-4 py-3">Tag</th>
+                    <th scope="col" class="px-8 py-3">Availability</th>
+                    <th scope="col" class="px-4 py-3">Inventory</th>
+                    <th scope="col" class="px-4 py-3">Created at</th> -->
                     <th scope="col" class="px-4 py-3">
-                        <span class="sr-only">Actions</span>
+                        Actions
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr
                     class="border-b dark:border-gray-700"
-                    v-for="(item, index) in data"
+                    v-for="(dataItem,index) in data"
                     :key="index"
                 >
-                    <td
+                    <th
                         scope="row"
-                        v-for="row in tableContent"
-                        :key="row"
-                        class="p-4 font-medium"
-                        :class="{
-                            'text-gray-900 whitespace-nowrap':
-                                row.heading === 'ID',
-                        }"
+                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-gray-400"
                     >
-                        <div v-if="row.type === 'text'">
-                            {{ item[row.value] }}
-                        </div>
+                        {{ dataItem.id }}
+                    </th>
+                    <td class="p-4" v-for="row in tableContent" :key="row">
+                        <span v-text="dataItem[row.value]" v-if="row.type === 'text'"></span>
+                        <span v-if="row.type === 'relation'">{{ relationValue(dataItem,row) }}</span>
+                        <span v-if="row.type === date">
+                            {{ toDate(dataItem[row.value]) }}
+                        </span>
                         <div
-                            v-if="row.type === 'image'"
-                            class="w-20 h-20 bg-cover bg-center rounded-lg"
-                            :style="`background-image: url(${item[row.value]})`"
+                            class="w-20 h-20 bg-cover bg-center"
+                            :class="row.rounded ?? false ? 'rounded-full' : 'rounded-lg'"
+                            v-if="row.type==='image'"
+                            :style="`background-image: url(${dataItem[row.value]})`"
                         ></div>
-                        <div v-if="row.type === date">
-                            {{ toDate(item[row.value]) }}
-                        </div>
                     </td>
-
-                    <td class="px-4 py-3">
+                    <td class="p-4">
                         <button
                             :id="`${index}-dropdown-button`"
                             :data-dropdown-toggle="`${index}-dropdown`"
@@ -80,11 +78,15 @@
                                 :aria-labelledby="`${index}-dropdown-button`"
                             >
                                 <li
-                                    v-for="(actionLink, index) in actionLinks"
-                                    :key="index"
+                                    v-for="(actionLink, index2) in actionLinks"
+                                    :key="index2"
                                 >
                                     <Link
-                                        :href="(actionLink.name ==='Edit') ? `/${actionLink.link}/${item['id']}/edit`:''"
+                                        :href="
+                                            actionLink.name === 'Edit'
+                                                ? `/${actionLink.link}/${dataItem['id']}/edit`
+                                                : ''
+                                        "
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                         >{{ actionLink.name }}</Link
                                     >
@@ -94,7 +96,7 @@
                                 <a
                                     href="#"
                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                    @click="$emit('deleteItem', item['id'])"
+                                    @click="$emit('deleteItem', dataItem['id'])"
                                     >Delete</a
                                 >
                             </div>
@@ -112,6 +114,14 @@ export default {
     props: ["data", "tableContent", "deleteEnable", "actionLinks"],
     emits: ["deleteItem"],
     methods: {
+        relationValue(dataItem,row){
+            if(row.values.length === 2){
+                // console.log(dataItem[row.values[0]][row.values[1]]);
+                return dataItem[row.values[0]] ? dataItem[row.values[0]][row.values[1]] ?? 'NULL' : 'NULL'
+            } else if (row.values.length === 3){
+                return dataItem[row.values[0]][row.values[1]][row.values[2] ?? '']
+            }
+        },
         toDate(date) {
             try {
                 var d = new Date(date);

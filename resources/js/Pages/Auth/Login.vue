@@ -1,7 +1,7 @@
 <template>
-    <section class="bg-gray-50 dark:bg-gray-900">
+    <section class="bg-gray-50 min-h-screen dark:bg-gray-800">
         <div
-            class="flex flex-col items-center justify-center px-6 py-2 mx-auto h-screen md:h-[768px] lg:py-0"
+            class="flex flex-col items-center justify-center px-6 py-2 mx-auto h-screen"
         >
             <Link
                 href="#"
@@ -15,51 +15,43 @@
                 Flowbite
             </Link>
             <div
-                class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+                class="w-full bg-white rounded-lg shadow sm:max-w-md dark:bg-gray-800"
             >
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h2>Sign in to your account</h2>
-                    <form
-                        class="space-y-4 md:space-y-6"
-                        action="#"
-                        @submit.prevent=""
-                    >
-                        <div>
-                            <FormSimpleInput
-                                :label="'Your Email'"
-                                :name="'email'"
-                                :type="'email'"
-                                v-model="loginInfo.email"
-                                :error="errors.email"
-                            >
-                            </FormSimpleInput>
-                        </div>
-                        <div>
-                            <FormSimpleInput
-                                :label="'Password'"
-                                :name="'password'"
-                                :type="'password'"
-                                v-model="loginInfo.password"
-                                :error="errors.password"
-                            >
-                            </FormSimpleInput>
-                        </div>
+                <div class="p-6 space-y-4 sm:p-8">
+                    <h2 class="pb-2 border-b-2">Sign in</h2>
+                    <form class="space-y-4" action="#" @submit.prevent="">
+                        <FormSimpleInput
+                            :label="'Your Email'"
+                            :name="'email'"
+                            :type="'email'"
+                            v-model="loginInfo.email"
+                            :error="errors.email"
+                        >
+                        </FormSimpleInput>
+
+                        <FormSimpleInput
+                            :label="'Password'"
+                            :name="'password'"
+                            :type="'password'"
+                            v-model="loginInfo.password"
+                            :error="errors.password"
+                        >
+                        </FormSimpleInput>
+
                         <div class="flex items-center justify-between">
-                            <div class="flex items-start">
-                                <FormCheckBox
-                                    :label="'Remember Me'"
-                                    :name="'remember_me'"
-                                    :checked="false"
-                                    v-model="loginInfo.remember_me"
-                                    :error="$page.props.errors.remember_me"
-                                >
-                                </FormCheckBox>
-                            </div>
-                            <Link
+                            <FormCheckBox
+                                :label="'Remember Me'"
+                                :name="'remember_me'"
+                                :checked="false"
+                                v-model="loginInfo.remember"
+                                :error="errors.remember"
+                            >
+                            </FormCheckBox>
+                            <!-- <Link
                                 href="#"
                                 class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                                 >Forgot password?</Link
-                            >
+                            > -->
                         </div>
                         <Button
                             @click.prevent="login()"
@@ -86,19 +78,20 @@
 
 <script>
 import { router } from "@inertiajs/vue3";
+
 export default {
+    props:['errors'],
     data() {
         return {
             loginInfo: {},
-            errors: this.$page.props.errors,
         };
     },
     methods: {
         login() {
             router.post("/login", this.loginInfo, {
                 preserveScroll: true,
-                preserveState: false,
-                only: ["errors"],
+                preserveState: true,
+                only:['errors']
             });
         },
     },
@@ -107,5 +100,14 @@ export default {
 <script setup>
 import FormSimpleInput from "../../Shared/FormElements/FormSimpleInput.vue";
 import FormCheckBox from "../../Shared/FormElements/FormCheckBox.vue";
-import Button from '../../Shared/FormElements/Button.vue';
+import Button from "../../Shared/FormElements/Button.vue";
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+})
+defineProps({ errors: Object });
+
 </script>

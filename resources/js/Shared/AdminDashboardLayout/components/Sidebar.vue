@@ -8,6 +8,7 @@
             </ul>
         </div>
     </aside>
+    <slot></slot>
 </template>
 <script>
 export default {

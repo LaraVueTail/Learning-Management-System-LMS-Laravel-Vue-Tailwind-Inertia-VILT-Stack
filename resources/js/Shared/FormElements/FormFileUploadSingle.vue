@@ -6,9 +6,10 @@
             >{{ label }}</label
         >
         <input
-            class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            class="mb-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none block dark:bg-gray-700 dark:text-white"
             :class="{
                 'border-2 border-rose-500': error || errorSize,
+                'hidden': hideInputBox,
             }"
             :id="name"
             type="file"
@@ -53,7 +54,7 @@
                         class="text-sm"
                     ></p>
                 </div>
-                <!-- <div class="flex text-gray-50 hover:text-red-500 gap-1 items-center" @click="fileRemoved()" v-if="addedFile || oldImage">
+                <div class="flex text-gray-50 hover:text-red-500 gap-1 items-center" @click="fileRemoved()" v-if="addedFile || oldImage">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -75,13 +76,13 @@
                         "
                         class="text-sm"
                     ></p>
-                </div> -->
+                </div>
             </div>
 
             </div>
             <div
-                class="bg-contain bg-center bg-no-repeat w-full h-full border-dashed border-2 border-gray-200 bg-gray-100"
-                :class="{ 'rounded-full': rounded, 'rounded-lg': !rounded, 'saturate-50 bg-blend-overlay bg-gray-900/75 shadow-2xl' : (addedFile || oldImage)}"
+                class="bg-cover bg-center bg-no-repeat w-full h-full border-dashed border-2 border-gray-200 bg-gray-100 dark:bg-gray-700"
+                :class="{ 'rounded-full': rounded, 'rounded-lg': !rounded, 'saturate-50 bg-blend-overlay bg-gray-900/75 shadow-2xl' : (addedFile || oldImage), 'border-2 border-rose-500': error || errorSize,}"
                 :style="`background-image: url(${uploadedFile()})`"
             ></div>
         </div>
@@ -91,7 +92,7 @@
 <script>
 import { FlagIcon } from "@heroicons/vue/20/solid";
 export default {
-    props: ["label", "error", "name", "oldImageLink", "rounded"],
+    props: ["label", "error", "name", "oldImageLink", "rounded","hideInputBox"],
     data() {
         return {
             addedFile: null,

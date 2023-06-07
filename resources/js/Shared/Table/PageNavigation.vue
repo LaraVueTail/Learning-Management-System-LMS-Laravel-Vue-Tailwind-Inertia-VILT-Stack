@@ -5,11 +5,11 @@
     >
         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
             Showing
-            <span class="font-semibold text-gray-900 dark:text-white"
+            <span class="font-semibold text-gray-900 dark:text-gray-400"
                 >{{ data.from }}-{{ data.to }}</span
             >
             of
-            <span class="font-semibold text-gray-900 dark:text-white">{{
+            <span class="font-semibold text-gray-900 dark:text-gray-400">{{
                 data.total
             }}</span>
         </span>
@@ -24,8 +24,8 @@
                 :class="{
                     'text-gray-500': !link.url,
                     'font-bold': link.active,
-                    'rounded-l-lg': link.label.includes('Previous'),
-                    'rounded-r-lg': link.label.includes('Next'),
+                    'rounded-l-lg cursor-pointer': link.label.includes('Previous'),
+                    'rounded-r-lg cursor-pointer': link.label.includes('Next'),
                 }"
             />
             <Component
@@ -37,8 +37,8 @@
                 :class="{
                     'text-gray-500': !link.url,
                     'font-bold': link.active,
-                    'rounded-l-lg': link.label.includes('Previous'),
-                    'rounded-r-lg': link.label.includes('Next'),
+                    'rounded-l-lg cursor-pointer': link.label.includes('Previous'),
+                    'rounded-r-lg cursor-pointer': link.label.includes('Next'),
                 }"
             />
         </div>

@@ -17,11 +17,17 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
+        // dd($guards);
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            // dd($guard);
+            if (Auth::guard($guard)->check() && ($guard === 'web')) {
+                return redirect()->route('admin.home');
+            }
+            if (Auth::guard($guard)->check() && ($guard === 'teacher')) {
+
+                return redirect()->route('student.home');
             }
         }
 

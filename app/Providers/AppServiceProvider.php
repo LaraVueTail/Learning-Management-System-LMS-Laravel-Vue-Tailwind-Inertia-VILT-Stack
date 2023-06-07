@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Teacher;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,8 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Gate::define('admin',function(User $user){
-            return $user->email === config('admin.email');
-        });
+        Model::unguard();
+
     }
 }
