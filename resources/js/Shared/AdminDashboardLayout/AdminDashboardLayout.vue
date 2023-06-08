@@ -1,19 +1,14 @@
 <template>
     <Notification></Notification>
-    <NavSidebar
-        :siteLogo="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'"
-        :siteName="'Flowbite'"
-        :userAvatar="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'"
-        :userName="'Ameerali C'"
-        :userEmail="'example@email.com'"
-        :navMenu="navMenu"
-        :sidebarMenu="sidebarMenu"
-    >
+    <NavSidebar :siteLogo="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :siteName="'Flowbite'"
+        :userAvatar="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :userName="'Ameerali C'"
+        :userEmail="'example@email.com'" :navMenu="navMenu" :sidebarMenu="sidebarMenu">
         <div class="md:px-4 py-4 sm:ml-64 dark:bg-gray-900">
-            <div class="px-2 md:px-4 py-4 mt-14 min-h-screen">
+            <div class="px-2 md:px-4  pt-4 pb-32 mt-14 min-h-screen">
                 <slot></slot>
-            </div></div
-    ></NavSidebar>
+            </div>
+        </div>
+    </NavSidebar>
 </template>
 <script setup>
 import { onMounted } from "vue";
@@ -29,7 +24,8 @@ import {
     UserCircleIcon,
     BookOpenIcon,
     BookmarkIcon,
-    UserGroupIcon
+    UserGroupIcon,
+    Cog6ToothIcon
 } from "@heroicons/vue/24/solid";
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -47,8 +43,8 @@ export default {
                     method: "get",
                 },
                 {
-                    name: "Settings",
-                    link: "/admin-dashboard/settings",
+                    name: "Profile Info",
+                    link: "/admin-dashboard/profile-info",
                     method: "get",
                 },
                 {
@@ -129,25 +125,16 @@ export default {
                     ],
                 },
                 {
-                    name: "Posts",
-                    link: "/admin-dashboard/posts",
+                    name: "Personal Info",
+                    link: "/admin-dashboard/profile-info",
                     method: "get",
-                    icon: DocumentTextIcon,
-                    subMenu: [
-                        {
-                            name: "Create",
-                            link: "/admin-dashboard/posts/create",
-                        },
-                        {
-                            name: "All Courses",
-                            link: "/admin-dashboard/posts",
-                        },
-                    ],
+                    icon: Cog6ToothIcon,
                 },
                 {
                     name: "Sign out",
                     link: "/logout",
                     method: "post",
+                    as: "button", type: "button",
                     icon: ArrowRightOnRectangleIcon,
                 },
             ],

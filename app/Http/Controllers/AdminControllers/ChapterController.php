@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Chapter;
 use App\Models\Course;
 use App\Services\FileManagement;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -22,14 +21,14 @@ class ChapterController extends Controller
             )
                 ->with('course')->paginate(3)->withQueryString(),
             'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd', 'course']),
-            'courses' => Course::get(['name', 'slug'])
+            'courses' => Course::get(['name', 'slug']),
         ]);
     }
     public function create()
     {
         return Inertia::render('AdminDashboard/Chapters/Create', [
             'courses' => Course::get(['id', 'name']),
-            'courseId' => request()->input('courseId')
+            'courseId' => request()->input('courseId'),
         ]);
     }
 
@@ -39,8 +38,8 @@ class ChapterController extends Controller
         $attributes = $this->validateChapter();
         if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] = $fileManagement->uploadFile(
-                file: $attributes['thumbnail'],
-                path: 'images/chapters/' . $attributes['slug'] . '/thumbnail'
+                file:$attributes['thumbnail'],
+                path:'images/chapters/' . $attributes['slug'] . '/thumbnail'
             );
         }
         Chapter::create($attributes);
@@ -51,7 +50,7 @@ class ChapterController extends Controller
     {
         return Inertia::render('AdminDashboard/Chapters/Edit', [
             'chapter' => $chapter,
-            'courses' => Course::get(['id', 'name'])
+            'courses' => Course::get(['id', 'name']),
         ]);
 
     }
@@ -61,26 +60,23 @@ class ChapterController extends Controller
         // dd(request()->all());
 
         $attributes = $this->validateChapter($chapter);
-        dd($attributes);
-
-        $this->changeOrder($chapter->order, $attributes['newOrder']);
 
         if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] =
-                $fileManagement->uploadFile(
-                    file: $attributes['thumbnail'] ?? false,
-                    deleteOldFile: true,
-                    oldFile: $chapter->thumbnail,
-                    path: 'images/chapters/' . ($chapter['slug'] !== $attributes['slug'] ? $attributes['slug'] : $chapter['slug']) . '/thumbnail',
-                );
+            $fileManagement->uploadFile(
+                file:$attributes['thumbnail'] ?? false,
+                deleteOldFile:true,
+                oldFile:$chapter->thumbnail,
+                path:'images/chapters/' . ($chapter['slug'] !== $attributes['slug'] ? $attributes['slug'] : $chapter['slug']) . '/thumbnail',
+            );
         }
         // dd($attributes['thumbnail']);
 
         if ($chapter['slug'] !== $attributes['slug']) {
             $fileManagement->moveFiles(
-                oldPath: 'images/chapters/' . $chapter['slug'] . '/thumbnail',
-                newPath: 'images/chapters/' . $attributes['slug'] . '/thumbnail',
-                deleteDirectory: 'images/chapters/' . $chapter['slug']
+                oldPath:'images/chapters/' . $chapter['slug'] . '/thumbnail',
+                newPath:'images/chapters/' . $attributes['slug'] . '/thumbnail',
+                deleteDirectory:'images/chapters/' . $chapter['slug']
             );
             $attributes['thumbnail'] = str_replace($chapter['slug'], $attributes['slug'], $chapter['thumbnail']);
         }
@@ -90,7 +86,7 @@ class ChapterController extends Controller
         return back()->with('success', 'Chapter Updated!');
     }
 
-    protected function validateChapter(?Chapter $chapter = null): array
+    protected function validateChapter( ? Chapter $chapter = null) : array
     {
         $chapter ??= new Chapter();
 

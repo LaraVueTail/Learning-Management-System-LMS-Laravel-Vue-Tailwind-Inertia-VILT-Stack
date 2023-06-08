@@ -16,7 +16,7 @@
     }
 </script>
   </head>
-  <body>
+  <body class="dark:bg-gray-900">
   <button
                         id="theme-toggle"
                         type="button"

@@ -4,12 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Category;
 use App\Models\Chapter;
-use App\Models\Course;
-use App\Models\Post;
+use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,10 +26,13 @@ class DatabaseSeeder extends Seeder
             'password' => config('admin.password'),
         ]);
 
-        User::factory(20)->create();
+        // User::factory(20)->create();
 
         // Course::factory(5)->create();
         Chapter::factory(10)->create();
+        Student::factory(1)->create([
+            'email' => 'student@example.com',
+        ]);
 
         // Category::factory(5)->create();
         // Post::factory(5)->create();

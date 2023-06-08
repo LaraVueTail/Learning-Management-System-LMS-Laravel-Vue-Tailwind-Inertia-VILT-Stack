@@ -5,27 +5,27 @@ namespace App\Http\Controllers\AdminControllers;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use App\Services\FileManagement;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Request;
-
 
 class TeacherController extends Controller
 {
     public function index()
     {
-        return Inertia::render('AdminDashboard/Teachers/Index',[
+        return Inertia::render('AdminDashboard/Teachers/Index', [
             'teachers' => Teacher::filter(
-                request(['search','dateStart','dateEnd','sortBy']))
+                request(['search', 'dateStart', 'dateEnd', 'sortBy']))
                 ->paginate(3)->withQueryString(),
-            'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd'])
+            'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd']),
         ]);
     }
     //
     public function create()
     {
-        return Inertia::render('AdminDashboard/Teachers/Create',[
+        return Inertia::render('AdminDashboard/Teachers/Create', [
             // 'categories' => Category::all()
         ]);
     }
@@ -33,51 +33,58 @@ class TeacherController extends Controller
     {
         // dd(request()->all());
         $attributes = $this->validateTeacher();
-        if($attributes['avatar'] ?? false){
+        if ($attributes['avatar'] ?? false) {
             $attributes['avatar'] = $fileManagement->uploadFile(
                 file:$attributes['avatar'],
-                path:'images/users/teachers/'.$attributes['slug'].'/avatar'
+                path:'images/users/teachers/' . $attributes['slug'] . '/avatar'
             );
         }
         Teacher::create($attributes);
-        return redirect('/admin-dashboard/teachers')->with('success','Teacher Created!');
+        return redirect('/admin-dashboard/teachers')->with('success', 'Teacher Created!');
     }
 
     public function edit(Teacher $teacher)
     {
         return Inertia::render('AdminDashboard/Teachers/Edit', [
-            'teacher' => $teacher
+            'teacher' => $teacher,
         ]);
 
     }
 
-    public function update(Teacher $teacher, FileManagement $fileManagement)
+    public function update(Teacher $teacher)
     {
-        // dd(request()->all());
 
         $attributes = $this->validateTeacher($teacher);
+        $fileManagement = new FileManagement();
 
-        if($attributes['avatar'] ?? false) {
-            $attributes['avatar'] = 
+        if ($attributes['avatar'] ?? false) {
+            $attributes['avatar'] =
             $fileManagement->uploadFile(
                 file:$attributes['avatar'] ?? false,
-                deleteOldFile: true, 
-                oldFile: $teacher->avatar,
-                path:'images/users/teachers/'.($teacher['slug'] !== $attributes['slug'] ? $attributes['slug'] : $teacher['slug']).'/avatar',
-            );  
+                deleteOldFile:true,
+                oldFile:$teacher->avatar,
+                path:'images/users/teachers/' . ($teacher['slug'] !== $attributes['slug'] ? $attributes['slug'] : $teacher['slug']) . '/avatar',
+            );
         }
         // dd($attributes['avatar']);
 
-        if($teacher['slug'] !== $attributes['slug']){
+        if ($teacher['slug'] !== $attributes['slug']) {
             $fileManagement->moveFiles(
-                oldPath:'images/users/teachers/'.$teacher['slug'].'/avatar',
-                newPath:'images/users/teachers/'.$attributes['slug'].'/avatar',
-                deleteDirectory: 'images/users/teachers/'.$teacher['slug']
+                oldPath:'images/users/teachers/' . $teacher['slug'] . '/avatar',
+                newPath:'images/users/teachers/' . $attributes['slug'] . '/avatar',
+                deleteDirectory:'images/users/teachers/' . $teacher['slug']
             );
-            $attributes['avatar'] = str_replace($teacher['slug'],$attributes['slug'],$teacher['avatar']);
+            $attributes['avatar'] = str_replace($teacher['slug'], $attributes['slug'], $teacher['avatar']);
+        }
+        if ($attributes['password'] === null) {
+            $attributes['password'] = $teacher['password'];
         }
 
         $teacher->update($attributes);
+
+        if ($teacher->id === Auth::user()->id) {
+            return;
+        }
 
         return back()->with('success', 'Teacher Updated!');
     }
@@ -86,13 +93,20 @@ class TeacherController extends Controller
     {
         // dd($teacher->course->all());
         $teacher->delete();
-        Storage::deleteDirectory('images/users/teachers/'.$teacher['slug']);
+        Storage::deleteDirectory('images/users/teachers/' . $teacher['slug']);
 
         return redirect('/admin-dashboard/teachers')->with('success', 'Teacher Deleted!');
     }
 
+    public function profile_info()
+    {
+        return Inertia::render('AdminDashboard/ProfileInfo', [
+            'teacher' => Auth::user(),
+        ]);
 
-    protected function validateTeacher(?Teacher $teacher = null): array
+    }
+
+    protected function validateTeacher( ? Teacher $teacher = null) : array
     {
         $teacher ??= new Teacher();
 
@@ -101,18 +115,18 @@ class TeacherController extends Controller
             'last_name' => 'required|max:50',
             'avatar' => $teacher->exists ? 'nullable' : 'required | mimes:jpeg,png | max:2096',
             'dob' => 'required',
-            'slug' => ['required',Rule::unique('teachers','slug')->ignore($teacher)],
+            'slug' => ['required', Rule::unique('teachers', 'slug')->ignore($teacher)],
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'email' => ['required','email', Rule::unique('teachers', 'email')->ignore($teacher)],
+            'email' => ['required', 'email', Rule::unique('teachers', 'email')->ignore($teacher)],
             'is_admin' => 'nullable | boolean',
-            'password' => (request()->input('password') ?? false || !$teacher->exists ) ? 'required|confirmed|min:6': 'nullable',
+            'password' => (request()->input('password') ?? false || !$teacher->exists) ? 'required|confirmed|min:6' : 'nullable',
         ],
-        [
-            'dob' => 'Date of birth required',
-            'slug'=> 'Enter a unique slug for your profile link',
-            'phone_number'=>'Enter a valid Phone number with country code',
-            'avatar' => 'Upload Profile image as jpg/png format with size less than 2MB',
-        ]
-    );
+            [
+                'dob' => 'Date of birth required',
+                'slug' => 'Enter a unique slug for your profile link',
+                'phone_number' => 'Enter a valid Phone number with country code',
+                'avatar' => 'Upload Profile image as jpg/png format with size less than 2MB',
+            ]
+        );
     }
 }

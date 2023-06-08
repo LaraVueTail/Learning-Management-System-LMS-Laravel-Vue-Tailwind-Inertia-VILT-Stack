@@ -42,10 +42,10 @@ function editRequest({
     dataId,
     state_preservation = true,
     scroll_preservation = true,
-    only_list, 
-}={}){
+    only_list,
+} = {}) {
     data['_method'] = "put";
-    router.post(url+dataId, data, {
+    router.post(url + (dataId ?? ''), data, {
         preserveState: state_preservation,
         preserveScroll: scroll_preservation,
         only: only_list,

@@ -4,14 +4,13 @@ namespace App\Http\Controllers\AdminControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\User;
+use App\Models\Student;
 // use Illuminate\Http\Request;
 use App\Services\FileManagement;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Request;
-
 
 class StudentController extends Controller
 {
@@ -19,19 +18,19 @@ class StudentController extends Controller
     public function index()
     {
         return Inertia::render('AdminDashboard/Students/Index', [
-            'students' => User::filter(
-                request(['search', 'dateStart', 'dateEnd', 'sortBy','course'])
+            'students' => Student::filter(
+                request(['search', 'dateStart', 'dateEnd', 'sortBy', 'course'])
             )
                 ->with('course')->paginate(3)->withQueryString(),
             'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd', 'course']),
-            'courses' => Course::get(['name', 'slug'])
+            'courses' => Course::get(['name', 'slug']),
         ]);
     }
 
     public function create()
     {
         return Inertia::render('AdminDashboard/Students/Create', [
-            'courses' => Course::get(['id', 'name'])
+            'courses' => Course::get(['id', 'name']),
         ]);
     }
 
@@ -41,27 +40,32 @@ class StudentController extends Controller
         $attributes = $this->validateStudent();
         if ($attributes['avatar'] ?? false) {
             $attributes['avatar'] = $fileManagement->uploadFile(
-                file: $attributes['avatar'],
-                path: 'images/users/students/' . $attributes['email'] . '/avatar'
+                file:$attributes['avatar'],
+                path:'images/users/students/' . $attributes['email'] . '/avatar'
             );
         }
 
-        User::create($attributes);
-        return redirect('/admin-dashboard/students')->with('success', 'Student has been created.');
+        Student::create($attributes);
+        if (Auth::guard('teacher')->check()) {
+            return redirect('/admin-dashboard/students')->with('success', 'Student has been created.');
+        }
+        // dd('dd');
+        return;
+
     }
 
-    public function edit(User $user)
+    public function edit(Student $student)
     {
         return Inertia::render('AdminDashboard/Students/Edit', [
-            'student' => $user,
-            'courses' => Course::get(['id', 'name'])
+            'student' => $student,
+            'courses' => Course::get(['id', 'name']),
         ]);
 
     }
 
-    protected function validateStudent(?User $user = null): array
+    protected function validateStudent( ? Student $student = null) : array
     {
-        $user ??= new User();
+        $student ??= new Student();
 
         return request()->validate(
             [
@@ -71,15 +75,15 @@ class StudentController extends Controller
                 'dob' => 'required',
                 'course_id' => 'nullable',
                 'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user)],
-                'password' => (request()->input('password') ?? false || !$user->exists) ? 'required|confirmed|min:6' : 'nullable',
-                'tac' => 'required|accepted'
+                'email' => ['required', 'email', Rule::unique('students', 'email')->ignore($student)],
+                'password' => (request()->input('password') ?? false || !$student->exists) ? 'required|confirmed|min:6' : 'nullable',
+                'tac' => 'required|accepted',
             ],
             [
                 'dob' => 'Date of birth required',
-                'phone_number'=>'Enter a valid Phone number with country code',
+                'phone_number' => 'Enter a valid Phone number with country code',
                 'avatar' => 'Upload Profile image as jpg/png format with size less than 2MB',
-                'tac' => 'Please agree to the Terms and Conditions!'
+                'tac' => 'Please agree to the Terms and Conditions!',
             ]
         );
     }
