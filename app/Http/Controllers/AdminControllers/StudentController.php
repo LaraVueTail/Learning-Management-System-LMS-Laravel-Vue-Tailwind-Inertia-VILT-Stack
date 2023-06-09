@@ -63,6 +63,59 @@ class StudentController extends Controller
 
     }
 
+    public function update(Student $student, FileManagement $fileManagement)
+    {
+        // dd(request()->all());
+        $student = $student->id ?? Auth::guard('student')->user();
+
+        $attributes = $this->validateStudent($student);
+
+        if ($attributes['avatar'] ?? false) {
+            $attributes['avatar'] =
+            $fileManagement->uploadFile(
+                file:$attributes['avatar'] ?? false,
+                deleteOldFile:true,
+                oldFile:$student->avatar,
+                path:'images/users/students/' . ($student['email'] !== $attributes['email'] ? $attributes['email'] : $student['email']) . '/avatar',
+            );
+        }
+        // dd($attributes['avatar']);
+
+        if ($student['email'] !== $attributes['email']) {
+            $fileManagement->moveFiles(
+                oldPath:'images/users/students/' . $student['email'] . '/avatar',
+                newPath:'images/users/students/' . $attributes['email'] . '/avatar',
+                deleteDirectory:'images/users/students/' . $student['email']
+            );
+            $attributes['avatar'] = str_replace($student['email'], $attributes['email'], $student['avatar']);
+        }
+
+        $student->update($attributes);
+
+        return back()->with('success', 'Student Profile Updated!');
+    }
+
+    public function enroll(Course $course)
+    {
+        $user = Auth::guard('student')->user();
+        if ($user->course_id === null) {
+            $user->course_id = $course->id;
+            $user->save();
+            return back()->with('success', 'You have been successfully enrolled!');
+        } else {
+            return back()->withErrors('ddd');
+        }
+    }
+
+    public function studentDashboard(Student $student)
+    {
+        $student = Auth::guard('student')->user();
+        return Inertia::render('StudentDashboard/Edit', [
+            'student' => $student,
+            'course' => $student->course,
+        ]);
+    }
+
     protected function validateStudent( ? Student $student = null) : array
     {
         $student ??= new Student();
@@ -71,7 +124,7 @@ class StudentController extends Controller
             [
                 'first_name' => 'required|min:3|max:50',
                 'last_name' => 'required|max:50',
-                'avatar' => 'nullable|mimes:jpeg,png |max:2096',
+                'avatar' => $student->exists ? 'nullable' : 'nullable|mimes:jpeg,png |max:2096',
                 'dob' => 'required',
                 'course_id' => 'nullable',
                 'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',

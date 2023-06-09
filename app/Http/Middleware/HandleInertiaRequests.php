@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -39,6 +40,8 @@ class HandleInertiaRequests extends Middleware
         $sharedData = array(
             'csrf_token' => csrf_token(),
             'app_url' => asset('/'),
+            'is_student_logged' => Auth::guard('student')->check(),
+            'is_teacher_logged' => Auth::guard('teacher')->check(),
             // 'admin' => [
             //     'email' => config('admin.email'),
             //     'name' => config('admin.name'),

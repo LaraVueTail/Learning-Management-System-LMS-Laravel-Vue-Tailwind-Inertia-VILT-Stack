@@ -23,7 +23,7 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($attributes)) {
+        if (Auth::guard('student')->attempt($attributes)) {
             $request->session()->regenerate();
             $student = Auth::getProvider()->retrieveByCredentials($attributes);
             Auth::login($student, $request->get('remember'));

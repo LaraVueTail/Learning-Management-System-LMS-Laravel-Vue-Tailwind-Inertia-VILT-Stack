@@ -24,6 +24,14 @@ class ChapterController extends Controller
             'courses' => Course::get(['name', 'slug']),
         ]);
     }
+
+    public function show(Course $course, Chapter $chapter)
+    {
+        return Inertia::render('Public/Chapter/Show', [
+            'chapter' => $chapter,
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('AdminDashboard/Chapters/Create', [

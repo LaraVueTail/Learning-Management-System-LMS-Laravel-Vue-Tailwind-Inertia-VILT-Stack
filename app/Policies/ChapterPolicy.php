@@ -2,21 +2,15 @@
 
 namespace App\Policies;
 
-use App\Models\Teacher;
-use App\Models\User;
+use App\Models\Chapter;
+use App\Models\Student;
 
-class TeacherPolicy
+class ChapterPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function admin(Teacher $teacher)
-    {
-        $adminUser = $teacher;
-        return $adminUser->is_admin === 1;
-    }
-
-    public function viewAny(User $user): bool
+    public function viewAny(Student $student): bool
     {
         //
     }
@@ -24,16 +18,16 @@ class TeacherPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Teacher $teacher): bool
+    public function view(Student $student, Chapter $chapter): bool
     {
-        //
-        return false;
+        // dd('ss');
+        return $student->course_id === $chapter->course->id;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(Student $student): bool
     {
         //
     }
@@ -41,7 +35,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Teacher $teacher): bool
+    public function update(Student $student, Chapter $chapter): bool
     {
         //
     }
@@ -49,7 +43,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Teacher $teacher): bool
+    public function delete(Student $student, Chapter $chapter): bool
     {
         //
     }
@@ -57,7 +51,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Teacher $teacher): bool
+    public function restore(Student $student, Chapter $chapter): bool
     {
         //
     }
@@ -65,7 +59,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Teacher $teacher): bool
+    public function forceDelete(Student $student, Chapter $chapter): bool
     {
         //
     }

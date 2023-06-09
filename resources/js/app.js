@@ -11,7 +11,7 @@ createInertiaApp({
     if (name.startsWith("AdminDashboard/")) {
       page.default.layout = AdminDashboardLayout;
     }
-    if (name.startsWith("Public/")) {
+    if (name.startsWith("Public/") || name.startsWith("StudentDashboard/")) {
       page.default.layout = PublicPagesLayout;
     }
     return page;

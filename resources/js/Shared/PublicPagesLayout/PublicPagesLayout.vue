@@ -1,13 +1,20 @@
 <template>
+    <Notification></Notification>
     <LVTHeader :projectName="'LMS'"></LVTHeader>
     <Header></Header>
-    <slot></slot>
+    <div class="bg-gray-50 dark:bg-gray-900">
+        <slot></slot>
+
+    </div>
     <Footer></Footer>
     <LVTFooter></LVTFooter>
 </template>
 <script setup>
 import LVTHeader from './LVTComponents/LVTHeader.vue'
 import LVTFooter from './LVTComponents/LVTFooter.vue'
+import Notification from '../AdminDashboardLayout/components/Notification.vue';
+
+
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 import Header from './Components/Header.vue'

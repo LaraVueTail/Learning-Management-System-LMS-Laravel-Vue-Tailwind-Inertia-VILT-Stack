@@ -4,8 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Models\Teacher;
-use App\Models\User;
+use App\Policies\ChapterPolicy;
 use App\Policies\TeacherPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         //
+        Chapter::class => ChapterPolicy::class,
     ];
 
     /**
@@ -28,5 +28,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('admin', [TeacherPolicy::class, 'admin']);
+        // Gate::define('is_enrolled', [ChapterPolicy::class, 'view']);
     }
 }
