@@ -16,7 +16,7 @@ class Course extends Model
     protected $appends = ['thumbnail_url','link'];
 
 
-    // protected $with = ['teacher'];
+    // protected $with = ['chapters','teacher'];
 
     public function scopeFilter($query, array $filters)
     {

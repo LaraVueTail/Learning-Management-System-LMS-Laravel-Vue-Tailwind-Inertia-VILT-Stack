@@ -1,7 +1,7 @@
 <template>
-    <header class="fixed top-0 w-full shadow-xl">
+    <header class="shadow-xl">
         <nav
-            class="bg-zinc-900 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800"
+            class="bg-zinc-900 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-900"
         >
             <div
                 class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
@@ -31,10 +31,10 @@
                         >Get started</a
                     > -->
                     <button
-                        data-collapse-toggle="mobile-menu-2"
+                        data-collapse-toggle="mobile-menu-lvt"
                         type="button"
                         class="inline-flex items-center p-2 ml-1 text-sm text-gray-400 rounded-lg lg:hidden focus:outline-none focus:ring-2 focus:ring-gray-500"
-                        aria-controls="mobile-menu-2"
+                        aria-controls="mobile-menu-lvt"
                         aria-expanded="false"
                     >
                         <span class="sr-only">Open main menu</span>
@@ -66,7 +66,7 @@
                 </div>
                 <div
                     class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-                    id="mobile-menu-2"
+                    id="mobile-menu-lvt"
                 >
                     <ul
                         class="flex flex-col mt-4 lg:flex-row lg:space-x-8 lg:mt-0 text-sm"

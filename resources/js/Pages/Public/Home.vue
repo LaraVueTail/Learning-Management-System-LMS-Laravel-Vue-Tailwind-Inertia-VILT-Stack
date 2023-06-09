@@ -1,5 +1,5 @@
 <template>
-    <HeroSectionVue></HeroSectionVue>
+    <HeroSection></HeroSection>
     <FeaturesSection></FeaturesSection>
     <CallToActionSection></CallToActionSection>
 </template>
@@ -11,7 +11,7 @@ export default {
 <script setup>
 import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
-import HeroSectionVue from '../../Shared/HomePageContents/HeroSection.vue';
+import HeroSection from '../../Shared/HomePageContents/HeroSection.vue';
 import FeaturesSection from '../../Shared/HomePageContents/FeaturesSection.vue';
 import CallToActionSection from '../../Shared/HomePageContents/CallToActionSection.vue';
 

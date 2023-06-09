@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminControllers\StudentController;
 use App\Http\Controllers\AdminControllers\TeacherController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicPagesController;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,6 +25,8 @@ use Inertia\Inertia;
 
 Route::name('public.')->group(function () {
     Route::get('/', [PublicPagesController::class, 'homePage'])->name('home');
+    Route::get('/courses', [PublicPagesController::class, 'coursesPage'])->name('courses.index');
+    Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->name('course.show');
     Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');
     Route::name('account.')->group(function () {
         Route::get('login', [AuthController::class, 'login'])->middleware('guest:student,teacher')->name('login');

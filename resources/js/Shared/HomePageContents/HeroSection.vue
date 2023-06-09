@@ -5,7 +5,7 @@
             background-image: url('https://images.pexels.com/photos/62693/pexels-photo-62693.jpeg');
         "
     >
-        <div class="bg-white/80 dark:bg-gray-900/95 py-36">
+        <div class="bg-white/80 dark:bg-gray-900 py-36">
             <div
                 class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12"
             >

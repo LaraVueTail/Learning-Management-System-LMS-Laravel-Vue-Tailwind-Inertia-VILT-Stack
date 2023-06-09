@@ -25,6 +25,16 @@ class CourseController extends Controller
             'teachers' => Teacher::get(['first_name','last_name','slug'])
         ]);
     }
+
+    public function show(Course $course)
+    {
+        return Inertia::render('Public/Course/Show',[
+            'course' => $course,
+            'chapters' => $course->chapters,
+            'teacher' => $course->teacher,
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('AdminDashboard/Courses/Create',[

@@ -255,9 +255,11 @@ export default {
 };
 </script>
 <script setup>
-import FormCheckBox from "../FormElements/FormCheckBox.vue";
-// function convertString(string) {
-//     var newString = string.split("_").join(" ");
-//     return newString.charAt(0).toUpperCase() + newString.slice(1);
-// }
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+    initFlowbite();
+});
 </script>
