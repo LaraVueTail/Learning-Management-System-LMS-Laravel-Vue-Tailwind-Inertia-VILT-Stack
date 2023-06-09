@@ -1,7 +1,7 @@
 <template>
-    <section class="bg-gray-50 min-h-screen dark:bg-gray-800">
+    <section class="bg-gray-50 dark:bg-gray-800 min-h-screen">
         <div
-            class="flex flex-col items-center justify-center px-6 py-20 mx-auto h-screen"
+            class="flex flex-col items-center justify-center px-2 md:px-6 pt-10 pb-24 md:py-20 mx-auto"
         >
             <Link
                 href="#"
@@ -17,7 +17,7 @@
             <div
                 class="w-full bg-white rounded-lg shadow sm:max-w-xl dark:bg-gray-800"
             >
-                <div class="p-6 space-y-4 sm:p-8">
+                <div class="px-4 py-6 md:p-6 space-y-4 sm:p-8">
                     <h2 class="pb-2 border-b-2">Create new account</h2>
                     <form class="space-y-4" action="#" @submit.prevent="">
                         <div class="grid md:grid-cols-2 gap-6">

@@ -1,11 +1,11 @@
 <template>
-    <Header></Header>
+    <LVTHeader :projectName="'Learning Management System(LMS)'"></LVTHeader>
     <slot></slot>
-    <Footer></Footer>
+    <LVTFooter></LVTFooter>
 </template>
 <script setup>
-import Header from './Components/Header.vue'
-import Footer from './Components/Footer.vue'
+import LVTHeader from './LVTComponents/LVTHeader.vue'
+import LVTFooter from './LVTComponents/LVTFooter.vue'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 
