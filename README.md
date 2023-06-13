@@ -15,7 +15,7 @@
 
 # Policies & Gates:
 - `TeacherPolicy` - Created a policy for Teacher model to check if they have admin access or not based on the 'is_admin' value. Also created a gate named 'admin' to use the policy.
-- `ChapterPolicy`- To check if the student enrolled to the course or not.
+- `ChapterPolicy`- To check if the student enrolled to the course or not. created before function to chacke if admin or assigned Teacher.
 
 # Providers:
 - `AppServiceProvider` - Added model $guard = [].

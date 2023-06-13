@@ -13,6 +13,11 @@ use Inertia\Inertia;
 
 class TeacherController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Teacher::class, 'teacher');
+    }
+
     public function index()
     {
         return Inertia::render('AdminDashboard/Teachers/Index', [
@@ -61,7 +66,7 @@ class TeacherController extends Controller
             $attributes['avatar'] =
             $fileManagement->uploadFile(
                 file:$attributes['avatar'] ?? false,
-                deleteOldFile:true,
+                deleteOldFile:$teacher->avatar ?? false,
                 oldFile:$teacher->avatar,
                 path:'images/users/teachers/' . ($teacher['slug'] !== $attributes['slug'] ? $attributes['slug'] : $teacher['slug']) . '/avatar',
             );
@@ -75,9 +80,6 @@ class TeacherController extends Controller
                 deleteDirectory:'images/users/teachers/' . $teacher['slug']
             );
             $attributes['avatar'] = str_replace($teacher['slug'], $attributes['slug'], $teacher['avatar']);
-        }
-        if ($attributes['password'] === null) {
-            $attributes['password'] = $teacher['password'];
         }
 
         $teacher->update($attributes);
@@ -114,12 +116,13 @@ class TeacherController extends Controller
             'first_name' => 'required|min:3|max:50',
             'last_name' => 'required|max:50',
             'avatar' => $teacher->exists ? 'nullable' : 'required | mimes:jpeg,png | max:2096',
-            'dob' => 'required',
+            'dob' => 'required|max:50',
+            'designation' => 'required|max:50',
             'slug' => ['required', Rule::unique('teachers', 'slug')->ignore($teacher)],
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'email' => ['required', 'email', Rule::unique('teachers', 'email')->ignore($teacher)],
             'is_admin' => 'nullable | boolean',
-            'password' => (request()->input('password') ?? false || !$teacher->exists) ? 'required|confirmed|min:6' : 'nullable',
+            'password' => (request()->input('password') ?? false || !$teacher->exists) ? 'required|confirmed|min:6' : 'exclude',
         ],
             [
                 'dob' => 'Date of birth required',

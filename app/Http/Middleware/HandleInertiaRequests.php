@@ -40,15 +40,22 @@ class HandleInertiaRequests extends Middleware
         $sharedData = array(
             'csrf_token' => csrf_token(),
             'app_url' => asset('/'),
-            'is_student_logged' => Auth::guard('student')->check(),
-            'is_teacher_logged' => Auth::guard('teacher')->check(),
-            // 'admin' => [
-            //     'email' => config('admin.email'),
-            //     'name' => config('admin.name'),
-            // ],
+            'is_student_logged' => Auth::guard('student')->check() ?? false,
+            'is_teacher_logged' => Auth::guard('teacher')->check() ?? false,
+            'is_admin_logged' => Auth::guard('teacher')->check() ? Auth::guard('teacher')->user()->can('admin') : false,
             'flash' => [
                 'success' => fn() => $request->session()->get('success'),
+                'error' => fn() => $request->session()->get('error'),
             ]);
+
+        if (str_starts_with($request->route()->getName(), 'admin.')) {
+            $sharedData = array_merge($sharedData, array(
+                'is_teacher_logged' => Auth::guard('teacher')->check() ?? false,
+                'is_teacher_logged_has_course' => Auth::guard('teacher')->check() ? (Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->courses->count() > 0) : false,
+                'is_admin_logged' => Auth::guard('teacher')->check() ? Auth::guard('teacher')->user()->can('admin') : false,
+            ));
+        };
+
         return array_merge(parent::share($request), $sharedData);
     }
 }

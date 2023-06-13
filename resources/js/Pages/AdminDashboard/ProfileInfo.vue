@@ -1,6 +1,6 @@
 <template>
     <div class="w-1/2">
-        <h2 class="text-gray-400 my-4">Profile Settings</h2>
+        <h2 class="my-4">Profile Settings</h2>
         <div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
@@ -20,10 +20,13 @@
                         :error="errors.avatar"></FormFileUploadSingle>
                 </div>
             </div>
-            <FormSimpleInput :label="'Profile Link'" :name="'slug'" :type="'text'" :preText="'@'" @change="createSlug()"
-                v-model="teacherInfo.slug" :error="errors.slug">
-            </FormSimpleInput>
             <div class="grid md:grid-cols-2 gap-6">
+                <FormSimpleInput :label="'Profile Link'" :name="'slug'" :type="'text'" :preText="'@'" @change="createSlug()"
+                    v-model="teacherInfo.slug" :error="errors.slug">
+                </FormSimpleInput>
+                <FormSimpleInput :label="'Designation'" :name="'designation'" :type="'text'"
+                    v-model="teacherInfo.designation" :error="errors.designation">
+                </FormSimpleInput>
                 <FormSimpleInput :label="'Date of birth'" :name="'dob'" :type="'date'" v-model="teacherInfo.dob"
                     :error="errors.dob">
                 </FormSimpleInput>

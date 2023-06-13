@@ -23,6 +23,8 @@ use Inertia\Inertia;
 
 Route::name('public.')->group(function () {
     Route::get('/', [PublicPagesController::class, 'homePage'])->name('home');
+    Route::get('/about', [PublicPagesController::class, 'aboutPage'])->name('about');
+    Route::get('/contact', [PublicPagesController::class, 'contactPage'])->name('contact');
     Route::get('/courses', [PublicPagesController::class, 'coursesPage'])->name('courses.index');
     Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->name('course.show');
     Route::post('/courses/{course:slug}/enroll', [StudentController::class, 'enroll'])->middleware('auth:student')->name('enroll');
@@ -39,13 +41,13 @@ Route::name('public.')->group(function () {
 });
 
 Route::name('admin.')->group(function () {
-    Route::middleware(['auth:teacher', 'admin_check'])->group(function () {
+    Route::middleware('auth:teacher')->group(function () {
         Route::prefix('/admin-dashboard')->group(function () {
-            Route::get('/', [DashboardController::class, 'home'])->name('home');
             Route::resource('/teachers', TeacherController::class)->except('show');
             Route::resource('/courses', CourseController::class)->except('show');
             Route::resource('/chapters', ChapterController::class)->except('show');
             Route::resource('/students', StudentController::class)->except('show');
+            Route::get('/', [DashboardController::class, 'home'])->name('home');
             Route::get('/profile-info', [DashboardController::class, 'profile_info'])->name('profile_info');
             Route::put('/profile-info', [DashboardController::class, 'update'])->name('profile_info_update');
         });

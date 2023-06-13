@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chapter;
 use App\Models\Course;
 use App\Services\FileManagement;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -13,15 +14,28 @@ use Inertia\Inertia;
 class ChapterController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->authorizeResource(Chapter::class, 'chapter');
+    }
+
     public function index()
     {
+        $fileteredChapters = Chapter::filter(
+            request(['search', 'dateStart', 'dateEnd', 'sortBy', 'course']));
+        $chapters = Auth::guard('teacher')->user()->can('admin') ? $fileteredChapters : $fileteredChapters->whereHas('course', function ($query) {
+            $query->whereHas('teacher', function ($query) {
+                $query->where('id', Auth::guard('teacher')->user()->id);
+            });
+        });
+
+        $courses = Auth::guard('teacher')->user()->can('admin') ? Course::get(['name', 'slug'])
+        : Course::whereBelongsTo(Auth::guard('teacher')->user())->get(['name', 'slug']);
         return Inertia::render('AdminDashboard/Chapters/Index', [
-            'chapters' => Chapter::filter(
-                request(['search', 'dateStart', 'dateEnd', 'sortBy', 'course'])
-            )
+            'chapters' => $chapters
                 ->with('course')->paginate(3)->withQueryString(),
             'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd', 'course']),
-            'courses' => Course::get(['name', 'slug']),
+            'courses' => $courses,
         ]);
     }
 
@@ -34,8 +48,10 @@ class ChapterController extends Controller
 
     public function create()
     {
+        $courses = Auth::guard('teacher')->user()->can('admin') ? Course::get(['id', 'name'])
+        : Course::whereBelongsTo(Auth::guard('teacher')->user())->get(['id', 'name']);
         return Inertia::render('AdminDashboard/Chapters/Create', [
-            'courses' => Course::get(['id', 'name']),
+            'courses' => $courses,
             'courseId' => request()->input('courseId'),
         ]);
     }
@@ -56,9 +72,11 @@ class ChapterController extends Controller
 
     public function edit(Chapter $chapter)
     {
+        $courses = Auth::guard('teacher')->user()->can('admin') ? Course::get(['id', 'name'])
+        : Course::whereBelongsTo(Auth::guard('teacher')->user())->get(['id', 'name']);
         return Inertia::render('AdminDashboard/Chapters/Edit', [
             'chapter' => $chapter,
-            'courses' => Course::get(['id', 'name']),
+            'courses' => $courses,
         ]);
 
     }

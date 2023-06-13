@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('dob');
+            $table->string('designation');
             $table->string('phone_number');
             $table->text('slug')->unique();
             $table->string('avatar')->nullable();

@@ -26,12 +26,12 @@ class AuthController extends Controller
         if (Auth::guard('student')->attempt($attributes)) {
             $request->session()->regenerate();
             $student = Auth::getProvider()->retrieveByCredentials($attributes);
-            Auth::login($student, $request->get('remember'));
+            Auth::guard('student')->login($student, $request->get('remember'));
             return redirect()->intended('/')->with('success', 'Welcome, ' . $student->full_name);
         } else if (Auth::guard('teacher')->attempt($attributes)) {
             $request->session()->regenerate();
             $teacher = Auth::guard('teacher')->user();
-            Auth::login($teacher, $request->get('remember'));
+            Auth::guard('teacher')->login($teacher, $request->get('remember'));
             if ($teacher->can('admin')) {
                 return redirect()->intended('admin-dashboard')->with('success', 'You are logged-in');
             }
@@ -44,7 +44,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('student')->logout();
+        Auth::guard('teacher')->logout();
 
         $request->session()->invalidate();
 

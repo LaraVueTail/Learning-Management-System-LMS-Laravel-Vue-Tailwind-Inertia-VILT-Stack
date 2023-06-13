@@ -47,10 +47,10 @@
         <template #footer>
             <Button @click.prevent="
                 editRequest({
-                    url: '/admin-dashboard/students',
+                    url: '/admin-dashboard/students/',
                     data: studentInfo,
                     dataId: student.id,
-                    only: ['flash', 'errors'],
+                    only: ['flash', 'errors', 'student'],
                 })
                 " :text="'Edit Student'" :color="'blue'"></Button>
         </template>

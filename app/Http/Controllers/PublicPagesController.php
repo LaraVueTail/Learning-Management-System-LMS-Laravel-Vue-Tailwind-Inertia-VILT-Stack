@@ -15,14 +15,24 @@ class PublicPagesController extends Controller
         return Inertia::render('Public/Home');
     }
 
+    public function aboutPage()
+    {
+        return Inertia::render('Public/About');
+    }
+
+    public function contactPage()
+    {
+        return Inertia::render('Public/Contact');
+    }
+
     public function coursesPage()
     {
-        return Inertia::render('Public/Courses',[
+        return Inertia::render('Public/Courses', [
             'courses' => Course::filter(
-                request(['search','dateStart','dateEnd','sortBy','teacher']))
+                request(['search', 'dateStart', 'dateEnd', 'sortBy', 'teacher']))
                 ->with('teacher')->paginate(6)->withQueryString(),
-            'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd','teacher']),
-            'teachers' => Teacher::get(['first_name','last_name','slug'])
-        ]);   
+            'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd', 'teacher']),
+            'teachers' => Teacher::get(['first_name', 'last_name', 'slug']),
+        ]);
     }
 }

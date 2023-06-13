@@ -26,6 +26,10 @@ class DatabaseSeeder extends Seeder
             'password' => config('admin.password'),
         ]);
 
+        Teacher::factory()->create([
+            'email' => 'teacher@example.com',
+        ]);
+
         // User::factory(20)->create();
 
         // Course::factory(5)->create();

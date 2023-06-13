@@ -66,7 +66,8 @@ class StudentController extends Controller
     public function update(Student $student, FileManagement $fileManagement)
     {
         // dd(request()->all());
-        $student = $student->id ?? Auth::guard('student')->user();
+        $student = $student->id ? $student : Auth::guard('student')->user();
+        // dd($student);
 
         $attributes = $this->validateStudent($student);
 
@@ -74,7 +75,7 @@ class StudentController extends Controller
             $attributes['avatar'] =
             $fileManagement->uploadFile(
                 file:$attributes['avatar'] ?? false,
-                deleteOldFile:true,
+                deleteOldFile:$student->avatar ?? false,
                 oldFile:$student->avatar,
                 path:'images/users/students/' . ($student['email'] !== $attributes['email'] ? $attributes['email'] : $student['email']) . '/avatar',
             );
@@ -103,7 +104,7 @@ class StudentController extends Controller
             $user->save();
             return back()->with('success', 'You have been successfully enrolled!');
         } else {
-            return back()->withErrors('ddd');
+            return back()->with('error', 'You have already enrolled in a course! Visit Dashboard');
         }
     }
 
@@ -125,11 +126,11 @@ class StudentController extends Controller
                 'first_name' => 'required|min:3|max:50',
                 'last_name' => 'required|max:50',
                 'avatar' => $student->exists ? 'nullable' : 'nullable|mimes:jpeg,png |max:2096',
-                'dob' => 'required',
+                'dob' => 'required|max:50',
                 'course_id' => 'nullable',
                 'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'email' => ['required', 'email', Rule::unique('students', 'email')->ignore($student)],
-                'password' => (request()->input('password') ?? false || !$student->exists) ? 'required|confirmed|min:6' : 'nullable',
+                'password' => (request()->input('password') ?? false || !$student->exists) ? 'required|confirmed|min:6' : 'exclude',
                 'tac' => 'required|accepted',
             ],
             [

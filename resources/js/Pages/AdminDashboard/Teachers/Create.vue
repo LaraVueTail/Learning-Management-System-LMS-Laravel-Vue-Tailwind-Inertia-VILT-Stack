@@ -1,114 +1,55 @@
 <template>
     <!-- Modal content -->
-    <Modal
-        :modalHeadingText="'Create new Teacher'"
-        :modalHeadingResetButton="true"
-        :modalWidth="2"
-    >
+    <Modal :modalHeadingText="'Create new Teacher'" :modalHeadingResetButton="true" :modalWidth="2">
         <template #body>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
-                    <FormSimpleInput
-                        :label="'First Name'"
-                        :name="'first_name'"
-                        @change="nameToSlug()"
-                        :type="'text'"
-                        v-model="teacherInfo.first_name"
-                        :error="errors.first_name"
-                    >
+                    <FormSimpleInput :label="'First Name'" :name="'first_name'" @change="nameToSlug()" :type="'text'"
+                        v-model="teacherInfo.first_name" :error="errors.first_name">
                     </FormSimpleInput>
-                    <FormSimpleInput
-                        :label="'Last Name'"
-                        :name="'last_name'"
-                        @change="nameToSlug()"
-                        :type="'text'"
-                        v-model="teacherInfo.last_name"
-                        :error="errors.last_name"
-                    >
+                    <FormSimpleInput :label="'Last Name'" :name="'last_name'" @change="nameToSlug()" :type="'text'"
+                        v-model="teacherInfo.last_name" :error="errors.last_name">
                     </FormSimpleInput>
-                    <FormSimpleInput
-                        :label="'Teacher Email'"
-                        :name="'email'"
-                        :type="'email'"
-                        v-model="teacherInfo.email"
-                        :error="errors.email"
-                    >
+                    <FormSimpleInput :label="'Teacher Email'" :name="'email'" :type="'email'" v-model="teacherInfo.email"
+                        :error="errors.email">
                     </FormSimpleInput>
                 </div>
                 <div>
-                    <FormFileUploadSingle
-                        @fileChange="(file) => (teacherInfo.avatar = file[0])"
-                        :label="'Profile Image'"
-                        :oldImageLink="oldAvatar"
-                        :rounded="true"
-                        :name="'avatar'"
-                        :hideInputBox="true"
-                        :error="errors.avatar"
-                    ></FormFileUploadSingle>
+                    <FormFileUploadSingle @fileChange="(file) => (teacherInfo.avatar = file[0])" :label="'Profile Image'"
+                        :oldImageLink="oldAvatar" :rounded="true" :name="'avatar'" :hideInputBox="true"
+                        :error="errors.avatar"></FormFileUploadSingle>
                 </div>
             </div>
-            <FormSimpleInput
-                :label="'Profile Link'"
-                :name="'slug'"
-                :type="'text'"
-                :preText="'@'"
-                @change="createSlug()"
-                v-model="teacherInfo.slug"
-                :error="errors.slug"
-            >
-            </FormSimpleInput>
             <div class="grid md:grid-cols-2 gap-6">
-                <FormSimpleInput
-                    :label="'Date of birth'"
-                    :name="'dob'"
-                    :type="'date'"
-                    v-model="teacherInfo.dob"
-                    :error="errors.dob"
-                >
+                <FormSimpleInput :label="'Profile Link'" :name="'slug'" :type="'text'" :preText="'@'" @change="createSlug()"
+                    v-model="teacherInfo.slug" :error="errors.slug">
                 </FormSimpleInput>
-                <FormSimpleInput
-                    :label="'Phone Number'"
-                    :name="'phone_number'"
-                    :placeholder="'+91'"
-                    :type="'text'"
-                    v-model="teacherInfo.phone_number"
-                    :error="errors.phone_number"
-                >
+                <FormSimpleInput :label="'Designation'" :name="'designation'" :type="'text'"
+                    v-model="teacherInfo.designation" :error="errors.designation">
+                </FormSimpleInput>
+                <FormSimpleInput :label="'Date of birth'" :name="'dob'" :type="'date'" v-model="teacherInfo.dob"
+                    :error="errors.dob">
+                </FormSimpleInput>
+                <FormSimpleInput :label="'Phone Number'" :name="'phone_number'" :placeholder="'+91'" :type="'text'"
+                    v-model="teacherInfo.phone_number" :error="errors.phone_number">
                 </FormSimpleInput>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
-                <FormSimpleInput
-                    :label="'Password'"
-                    :name="'password'"
-                    :type="'password'"
-                    v-model="teacherInfo.password"
-                    :error="errors.password"
-                >
+                <FormSimpleInput :label="'Password'" :name="'password'" :type="'password'" v-model="teacherInfo.password"
+                    :error="errors.password">
                 </FormSimpleInput>
-                <FormSimpleInput
-                    :label="'Confirm Password'"
-                    :name="'confirm_password'"
-                    :type="'password'"
-                    v-model="teacherInfo.password_confirmation"
-                    :error="errors.password"
-                >
+                <FormSimpleInput :label="'Confirm Password'" :name="'confirm_password'" :type="'password'"
+                    v-model="teacherInfo.password_confirmation" :error="errors.password">
                 </FormSimpleInput>
             </div>
-            <FormCheckBox
-                :label="'Provide Admin access to this Teacher'"
-                :name="'is_admin'"
-                :checked="false"
-                v-model="teacherInfo.is_admin"
-                :error="errors.is_admin"
-            >
+            <FormCheckBox :label="'Provide Admin access to this Teacher'" :name="'is_admin'" :checked="false"
+                v-model="teacherInfo.is_admin" :error="errors.is_admin">
             </FormCheckBox>
         </template>
         <template #footer>
             <Button
-                @click.prevent="createRequest({ url : '/admin-dashboard/teachers', data : teacherInfo, only: ['flash', 'errors']})"
-                :text="'Create Teacher'"
-                :color="'blue'"
-            ></Button>
+                @click.prevent="createRequest({ url: '/admin-dashboard/teachers', data: teacherInfo, only: ['flash', 'errors'] })"
+                :text="'Create Teacher'" :color="'blue'"></Button>
         </template>
     </Modal>
 </template>
@@ -121,16 +62,16 @@ export default {
             teacherInfo: {}
         };
     },
-    computed:{
-        fullName(){
-            return (this.teacherInfo.first_name ?? '') +' '+ (this.teacherInfo.last_name ?? '')
+    computed: {
+        fullName() {
+            return (this.teacherInfo.first_name ?? '') + ' ' + (this.teacherInfo.last_name ?? '')
         }
     },
     methods: {
-        nameToSlug(){
+        nameToSlug() {
             this.teacherInfo.slug = changeToSlug(this.fullName)
         },
-        createSlug(){
+        createSlug() {
             this.teacherInfo.slug = changeToSlug(this.fullName)
         }
     },
@@ -143,7 +84,7 @@ import FormFileUploadSingle from "../../../Shared/FormElements/FormFileUploadSin
 import Modal from "../../../Shared/Modal/Modal.vue";
 import FormCheckBox from "../../../Shared/FormElements/FormCheckBox.vue";
 
-import { changeToSlug,createRequest } from '../../../main.js'
+import { changeToSlug, createRequest } from '../../../main.js'
 
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'

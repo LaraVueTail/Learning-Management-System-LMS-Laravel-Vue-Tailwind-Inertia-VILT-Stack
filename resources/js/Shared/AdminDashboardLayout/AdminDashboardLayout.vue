@@ -51,6 +51,8 @@ export default {
                     name: "Sign out",
                     link: "/logout",
                     method: "post",
+                    as: "button", type: "button",
+
                 },
             ],
             sidebarMenu: [
@@ -64,6 +66,7 @@ export default {
                     name: "Teachers",
                     link: "/admin-dashboard/teachers",
                     method: "get",
+                    hideIf: !this.$page.props.is_admin_logged,
                     icon: UserCircleIcon,
                     subMenu: [
                         {
@@ -81,9 +84,11 @@ export default {
                     link: "/admin-dashboard/courses",
                     method: "get",
                     icon: BookOpenIcon,
+                    hideIf: !this.$page.props.is_teacher_logged_has_course,
                     subMenu: [
                         {
                             name: "Create",
+                            hideIf: !this.$page.props.is_admin_logged,
                             link: "/admin-dashboard/courses/create",
                         },
                         {
@@ -97,6 +102,7 @@ export default {
                     link: "/admin-dashboard/chapters",
                     method: "get",
                     icon: BookmarkIcon,
+                    hideIf: !this.$page.props.is_teacher_logged_has_course,
                     subMenu: [
                         {
                             name: "Create",
@@ -112,6 +118,7 @@ export default {
                     name: "Students",
                     link: "/admin-dashboard/students",
                     method: "get",
+                    hideIf: !this.$page.props.is_admin_logged,
                     icon: UserGroupIcon,
                     subMenu: [
                         {

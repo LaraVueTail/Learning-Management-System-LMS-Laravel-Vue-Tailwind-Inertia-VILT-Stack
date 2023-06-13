@@ -60,7 +60,7 @@
             editRequest({
                 url: '/dashboard',
                 data: studentInfo,
-                only: ['flash', 'errors'],
+                only: ['flash', 'errors', 'student'],
             })
             " :text="'Edit Info'" :color="'blue'" class="my-2"></Button>
 

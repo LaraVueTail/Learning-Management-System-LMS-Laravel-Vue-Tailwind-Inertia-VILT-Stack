@@ -3,7 +3,7 @@
         :text="'Deleting the course will permanently removed from the database. You can\'t recover the course again. Are you sure about deleting?'">
     </DeleteAlert>
     <!-- Modal content -->
-    <div class="grid md:grid-cols-2 gap-6 w-full">
+    <div class="grid lg:grid-cols-2 gap-6 w-full">
         <Modal :modalHeadingText="'Edit Course'" :modalHeadingResetButton="true" :modalWidth="2">
             <template #body>
                 <div class="grid md:grid-cols-2 gap-6">
@@ -28,7 +28,7 @@
                     </FormSimpleInput>
                     <FormSelect :label="'Assign Teacher'" :name="'teacher_id'" :selected="courseInfo.teacher_id ?? 1"
                         v-model="courseInfo.teacher_id" :error="errors.teacher_id" :optionsArray="teachers"
-                        :optionName="'full_name'" :optionValue="'id'">
+                        :optionName="'full_name'" :optionValue="'id'" v-if="$page.props.is_admin_logged">
                     </FormSelect>
                 </div>
                 <FormTextEditor v-model="courseInfo.description" :label="'Course Description'" :name="'description'"
@@ -43,7 +43,8 @@
                         only: ['flash', 'errors', 'course'],
                     })
                     " :text="'Edit Course'" :color="'blue'"></Button>
-                <Button @click.prevent="deleteId = course.id" :text="'Delete Course'" :color="'red'"></Button>
+                <Button @click.prevent="deleteId = course.id" :text="'Delete Course'" :color="'red'"
+                    v-if="$page.props.is_admin_logged"></Button>
             </template>
         </Modal>
         <Modal :modalHeadingText="'Chapters'" :modalHeadingResetButton="true" :modalWidth="2">

@@ -15,11 +15,18 @@ use Inertia\Inertia;
 class CourseController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->authorizeResource(Course::class, 'course');
+    }
+
     public function index()
     {
+        $courses = Auth::guard('teacher')->user()->can('admin') ? Course::filter(
+            request(['search', 'dateStart', 'dateEnd', 'sortBy', 'teacher'])) : Course::filter(
+            request(['search', 'dateStart', 'dateEnd', 'sortBy', 'teacher']))->whereBelongsTo(Auth::guard('teacher')->user());
         return Inertia::render('AdminDashboard/Courses/Index', [
-            'courses' => Course::filter(
-                request(['search', 'dateStart', 'dateEnd', 'sortBy', 'teacher']))
+            'courses' => $courses
                 ->with('teacher')->paginate(3)->withQueryString(),
             'filters' => Request::only(['search', 'sortBy', 'dateStart', 'dateEnd', 'teacher']),
             'teachers' => Teacher::get(['first_name', 'last_name', 'slug']),
