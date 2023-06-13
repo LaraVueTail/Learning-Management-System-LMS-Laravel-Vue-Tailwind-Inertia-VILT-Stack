@@ -50,7 +50,7 @@
                             >
                                 <span class="sr-only">Open user menu</span>
                                 <img
-                                    class="w-8 h-8 rounded-full"
+                                    class="w-10 h-10 object-cover rounded-full"
                                     :src="userAvatar"
                                     alt="user photo"
                                 />

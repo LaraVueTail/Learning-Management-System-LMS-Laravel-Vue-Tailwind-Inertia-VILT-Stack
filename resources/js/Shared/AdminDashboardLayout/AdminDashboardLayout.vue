@@ -1,8 +1,8 @@
 <template>
     <Notification></Notification>
-    <NavSidebar :siteLogo="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :siteName="'Flowbite'"
-        :userAvatar="'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'" :userName="'Ameerali C'"
-        :userEmail="'example@email.com'" :navMenu="navMenu" :sidebarMenu="sidebarMenu">
+    <NavSidebar :siteLogo="'/Sitelogo/logo.svg'" :siteName="'MasterLearn'"
+        :userAvatar="$page.props.admin_user.avatar_url" :userName="$page.props.admin_user.full_name"
+        :userEmail="$page.props.admin_user.email" :navMenu="navMenu" :sidebarMenu="sidebarMenu">
         <div class="md:px-4 py-4 sm:ml-64 dark:bg-gray-900">
             <div class="px-2 md:px-4  pt-4 pb-32 mt-14 min-h-screen">
                 <slot></slot>

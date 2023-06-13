@@ -11,7 +11,7 @@ class StudentPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function before(Student $student, string $ability): bool | null
+    public function before($user, string $ability): bool | null
     {
 
         if (Auth::guard('teacher')->check() ?Auth::guard('teacher')->user()->can('admin') : false) {

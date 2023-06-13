@@ -51,6 +51,7 @@ class HandleInertiaRequests extends Middleware
         if (str_starts_with($request->route()->getName(), 'admin.')) {
             $sharedData = array_merge($sharedData, array(
                 'is_teacher_logged' => Auth::guard('teacher')->check() ?? false,
+                'admin_user' => Auth::guard('teacher')->check() ? Auth::guard('teacher')->user() : false,
                 'is_teacher_logged_has_course' => Auth::guard('teacher')->check() ? (Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->courses->count() > 0) : false,
                 'is_admin_logged' => Auth::guard('teacher')->check() ? Auth::guard('teacher')->user()->can('admin') : false,
             ));
