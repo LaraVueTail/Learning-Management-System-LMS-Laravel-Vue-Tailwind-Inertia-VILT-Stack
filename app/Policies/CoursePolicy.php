@@ -9,13 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CoursePolicy
 {
+    public function before($user, string $ability): bool|null
+    {
+
+        if (Auth::guard('teacher')->check() ? Auth::guard('teacher')->user()->can('admin') : false) {
+            return true;
+        }
+        return null;
+    }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(Teacher $teacher): bool
     {
         //
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->courses->count() > 0;
+        return false;
 
     }
 
@@ -34,7 +43,8 @@ class CoursePolicy
     public function create(Teacher $teacher): bool
     {
         //
-        return Auth::guard('teacher')->user()->can('admin');
+        return $teacher->courses->count() > 0;
+
     }
 
     /**
@@ -43,7 +53,7 @@ class CoursePolicy
     public function update(Teacher $teacher, Course $course): bool
     {
         //
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->id === $course->teacher->id;
+        return $teacher->id === $course->teacher->id;
 
     }
 
@@ -52,7 +62,7 @@ class CoursePolicy
      */
     public function delete(Teacher $teacher, Course $course): bool
     {
-        return Auth::guard('teacher')->user()->can('admin');
+        return false;
     }
 
     /**
@@ -60,7 +70,7 @@ class CoursePolicy
      */
     public function restore(Teacher $teacher, Course $course): bool
     {
-        return Auth::guard('teacher')->user()->can('admin');
+        return false;
 
     }
 
@@ -69,7 +79,8 @@ class CoursePolicy
      */
     public function forceDelete(Teacher $teacher, Course $course): bool
     {
-        return Auth::guard('teacher')->user()->can('admin');
+        return false;
+
 
     }
 }

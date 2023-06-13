@@ -9,23 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ChapterPolicy
 {
-    // public function before($teacher, string $ability): bool | null
-    // {
-    //     if (Auth::guard('teacher')->user()->can('admin')) {
-    //         return true;
-    //     } else if (Auth::guard('teacher')->user()->id === $chapter->course->teacher->id) {
-    //         return true;
-    //     }
-    //     return null;
-    // }
+
+    public function before($user, string $ability): bool|null
+    {
+
+        if (Auth::guard('teacher')->check() ? Auth::guard('teacher')->user()->can('admin') : false) {
+            return true;
+        }
+        return null;
+    }
 
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(Teacher $teacher): bool
     {
-
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->courses->count() > 0;
+        return $teacher->courses->count() > 0;
 
     }
 
@@ -42,7 +41,7 @@ class ChapterPolicy
      */
     public function create(Teacher $teacher): bool
     {
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->courses->count() > 0;
+        return $teacher->courses->count() > 0;
 
     }
 
@@ -51,7 +50,7 @@ class ChapterPolicy
      */
     public function update(Teacher $teacher, Chapter $chapter): bool
     {
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->id === $chapter->course->teacher->id;
+        return $teacher->id === $chapter->course->teacher->id;
 
     }
 
@@ -60,7 +59,7 @@ class ChapterPolicy
      */
     public function delete(Teacher $teacher, Chapter $chapter): bool
     {
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->id === $chapter->course->teacher->id;
+        return $teacher->id === $chapter->course->teacher->id;
 
     }
 
@@ -69,7 +68,7 @@ class ChapterPolicy
      */
     public function restore(Teacher $teacher, Chapter $chapter): bool
     {
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->id === $chapter->course->teacher->id;
+        return $teacher->id === $chapter->course->teacher->id;
 
     }
 
@@ -78,7 +77,7 @@ class ChapterPolicy
      */
     public function forceDelete(Teacher $teacher, Chapter $chapter): bool
     {
-        return Auth::guard('teacher')->user()->can('admin') || Auth::guard('teacher')->user()->id === $chapter->course->teacher->id;
+        return $teacher->id === $chapter->course->teacher->id;
 
     }
 }

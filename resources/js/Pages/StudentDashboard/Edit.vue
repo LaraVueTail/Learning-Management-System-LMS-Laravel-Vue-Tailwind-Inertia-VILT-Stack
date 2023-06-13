@@ -58,8 +58,9 @@
         </div>
         <Button @click.prevent="
             editRequest({
-                url: '/dashboard',
+                url: '/dashboard/',
                 data: studentInfo,
+                dataId: studentInfo.id,
                 only: ['flash', 'errors', 'student'],
             })
             " :text="'Edit Info'" :color="'blue'" class="my-2"></Button>

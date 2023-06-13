@@ -36,7 +36,7 @@ Route::name('public.')->group(function () {
         Route::get('register', [AuthController::class, 'register'])->middleware('guest:student,teacher')->name('register');
         Route::post('register', [AuthController::class, 'store'])->middleware('guest:student,teacher');
         Route::get('dashboard', [StudentController::class, 'studentDashboard'])->middleware('auth:student')->name('dashboard');
-        Route::put('dashboard', [StudentController::class, 'update'])->middleware('auth:student')->name('dashboard');
+        Route::put('dashboard/{student}', [StudentController::class, 'update'])->middleware('auth:student')->name('dashboard');
     });
 });
 

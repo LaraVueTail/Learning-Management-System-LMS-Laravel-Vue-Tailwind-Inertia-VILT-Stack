@@ -2,84 +2,83 @@
 
 namespace App\Policies;
 
-use App\Models\Teacher;
-use App\Models\User;
+use App\Models\Student;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Auth;
 
-class TeacherPolicy
+class StudentPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-
-    public function before(Teacher $teacher, string $ability): bool | null
+    public function before(Student $student, string $ability): bool | null
     {
-        if (Auth::guard('teacher')->check() ? Auth::guard('teacher')->user()->can('admin') : false) {
+
+        if (Auth::guard('teacher')->check() ?Auth::guard('teacher')->user()->can('admin') : false) {
             return true;
         }
         return null;
     }
 
-    public function viewAny(Teacher $teacher): bool
+    public function viewAny(Student $student): bool
     {
-        //
         return false;
-
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(Teacher $user, Teacher $teacher): bool
+    public function view(Student $user, Student $student): bool
     {
-        //
         return false;
+
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(Teacher $teacher): bool
+    public function create(Student $student): bool
     {
-        //
-        return false;
-
+        return true;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(Teacher $user, Teacher $teacher): bool
+    public function update(Student $user, Student $student): bool
     {
-        //
-        return $user->id === $teacher->id;
+        if($user->id === $student->id){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(Teacher $user, Teacher $teacher): bool
+    public function delete(Student $user, Student $student): bool
     {
-        //
         return false;
-
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(Teacher $user, Teacher $teacher): bool
+    public function restore(Student $user, Student $student): bool
     {
         //
         return false;
+
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(Teacher $user, Teacher $teacher): bool
+    public function forceDelete(Student $user, Student $student): bool
     {
         //
         return false;
+
     }
 }

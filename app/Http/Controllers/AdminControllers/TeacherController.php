@@ -59,6 +59,7 @@ class TeacherController extends Controller
     public function update(Teacher $teacher)
     {
 
+
         $attributes = $this->validateTeacher($teacher);
         $fileManagement = new FileManagement();
 
@@ -85,9 +86,9 @@ class TeacherController extends Controller
         $teacher->update($attributes);
 
         if ($teacher->id === Auth::user()->id) {
-            return;
-        }
+            return back()->with('success', 'Profile Updated!');
 
+        }
         return back()->with('success', 'Teacher Updated!');
     }
 

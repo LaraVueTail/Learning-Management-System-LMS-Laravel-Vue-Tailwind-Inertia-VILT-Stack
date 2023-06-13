@@ -20,7 +20,7 @@ class TeacherFactory extends Factory
             'first_name' => fake()->name(),
             'last_name' => fake()->name(),
             'avatar' => fake()->randomElement(['https://images.pexels.com/photos/8617727/pexels-photo-8617727.jpeg', 'https://images.pexels.com/photos/5212320/pexels-photo-5212320.jpeg', 'https://images.pexels.com/photos/8617946/pexels-photo-8617946.jpeg']),
-            'dob' => fake()->date('d-m-Y'),
+            'dob' => fake()->date('Y-m-d'),
             'designation' => fake()->randomElement(['M.Sc(Physics), M.Ed', 'PhD(Chemistry)', 'MD(Surgeon),MBBS']),
             'phone_number' => '+911234121221',
             'slug' => $this->faker->unique()->slug(),

@@ -22,12 +22,4 @@ class DashboardController extends Controller
         ]);
 
     }
-
-    public function update()
-    {
-        $teacher = Auth::user();
-        $teacherController = new TeacherController();
-        $teacherController->update($teacher);
-        return redirect('/admin-dashboard')->with('success', 'Your account has been updated.');
-    }
 }

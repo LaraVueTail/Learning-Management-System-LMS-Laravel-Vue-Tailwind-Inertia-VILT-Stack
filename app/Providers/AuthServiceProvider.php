@@ -5,9 +5,11 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Course;
+use App\Models\Student;
 use App\Models\Teacher;
 use App\Policies\ChapterPolicy;
 use App\Policies\CoursePolicy;
+use App\Policies\StudentPolicy;
 use App\Policies\TeacherPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Chapter::class => ChapterPolicy::class,
         Teacher::class => TeacherPolicy::class,
         Course::class => CoursePolicy::class,
+        Student::class => StudentPolicy::class,
     ];
 
     /**

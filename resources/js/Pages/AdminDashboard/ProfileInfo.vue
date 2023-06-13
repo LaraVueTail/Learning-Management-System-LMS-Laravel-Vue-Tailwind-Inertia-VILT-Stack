@@ -44,8 +44,9 @@
             </div>
             <Button @click.prevent="
                 editRequest({
-                    url: '/admin-dashboard/profile-info',
+                    url: '/admin-dashboard/teachers/',
                     data: teacherInfo,
+                    dataId: teacherInfo.id,
                     only: ['flash', 'errors', 'teacher'],
                 })
                 " :text="'Edit Teacher'" :color="'blue'" class="my-4"></Button>
@@ -61,6 +62,11 @@ export default {
         return {
             teacherInfo: this.teacher,
         };
+    },
+    computed: {
+        fullName() {
+            return (this.teacherInfo.first_name ?? '') + ' ' + (this.teacherInfo.last_name ?? '')
+        }
     },
     methods: {
         nameToSlug() {

@@ -15,6 +15,12 @@ use Inertia\Inertia;
 class StudentController extends Controller
 {
     //
+    public function __construct()
+    {
+
+        $this->authorizeResource(Student::class, 'student');
+    }
+
     public function index()
     {
         return Inertia::render('AdminDashboard/Students/Index', [
@@ -63,13 +69,15 @@ class StudentController extends Controller
 
     }
 
-    public function update(Student $student, FileManagement $fileManagement)
+    public function update(Student $student)
     {
-        // dd(request()->all());
-        $student = $student->id ? $student : Auth::guard('student')->user();
+
+        // $student = $student->id ? $student : Auth::guard('student')->user();
         // dd($student);
 
         $attributes = $this->validateStudent($student);
+        $fileManagement = new FileManagement();
+
 
         if ($attributes['avatar'] ?? false) {
             $attributes['avatar'] =

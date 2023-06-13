@@ -20,7 +20,7 @@ class StudentFactory extends Factory
         return [
             'first_name' => fake()->name(),
             'last_name' => fake()->name(),
-            'dob' => fake()->date('d-m-Y'),
+            'dob' => fake()->date('Y-m-d'),
             'avatar' => 'https://images.pexels.com/photos/5211478/pexels-photo-5211478.jpeg',
             'phone_number' => '+91XXXXXXXXXX',
             'tac' => true,

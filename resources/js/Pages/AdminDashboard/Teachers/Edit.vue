@@ -73,6 +73,11 @@ export default {
             deleteId: false,
         };
     },
+    computed: {
+        fullName() {
+            return (this.teacherInfo.first_name ?? '') + ' ' + (this.teacherInfo.last_name ?? '')
+        }
+    },
     methods: {
         nameToSlug() {
             this.teacherInfo.slug = changeToSlug(this.fullName);
