@@ -24,7 +24,7 @@ class CoursePolicy
     public function viewAny(Teacher $teacher): bool
     {
         //
-        return false;
+        return $teacher->courses->count() > 0;
 
     }
 
