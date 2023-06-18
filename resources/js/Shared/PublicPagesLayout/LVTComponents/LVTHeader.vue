@@ -2,7 +2,7 @@
     <header class="shadow-xl">
         <nav class="bg-zinc-900 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-900">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-                <a href="https://laravuetail.com" class="flex items-center">
+                <a :href="projectLink" class="flex items-center">
                     <img class="h-8 w-auto mr-3" :src="$page.props.app_url + 'Sitelogo/laravuetail-logo.png'" alt="" />
                     <p class="text-sm text-gray-100 font-poppins">
                         <span class="text-[#ff2d20]">Lara</span><span class="text-[#41b883]">Vue</span><span
@@ -41,7 +41,7 @@
                 <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-lvt">
                     <ul class="flex flex-col mt-4 lg:flex-row lg:space-x-8 lg:mt-0 text-sm">
                         <li>
-                            <a href="/"
+                            <a :href="projectLink"
                                 class="block py-2 pr-4 pl-3 text-tailwind hover:text-vue border-b border-gray-100 lg:border-0 lg:p-0"
                                 aria-current="page">Home</a>
                         </li>
@@ -62,7 +62,7 @@
 </template>
 <script>
 export default {
-    props: ["projectName", "projectDocsLink", "projectGithubRepo"]
+    props: ["projectName", "projectLink", "projectDocsLink", "projectGithubRepo"]
 }
 </script>
 <script setup>
