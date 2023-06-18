@@ -9,7 +9,7 @@
                 <div class="flex items-center lg:order-2">
                     <Link :href="($page.props.is_student_logged || $page.props.is_teacher_logged) ? '/dashboard' : '/login'"
                         class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
-                    {{ ($page.props.is_student_logged || $page.props.is_teacher_logged) ? 'Dashboard' : 'Log in' }}</Link>
+                    {{ ($page.props.is_student_logged || $page.props.is_teacher_logged) ? 'Dashboard' : '' }}</Link>
                     <Link :href="($page.props.is_student_logged || $page.props.is_teacher_logged) ? '/logout' : '/register'"
                         :method="($page.props.is_student_logged || $page.props.is_teacher_logged) ? 'post' : 'get'"
                         as="button" :type="($page.props.is_student_logged || $page.props.is_teacher_logged) ? 'button' : ''"

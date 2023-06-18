@@ -1,6 +1,8 @@
 <template>
     <Notification></Notification>
-    <LVTHeader :projectName="'LVTLearn'"></LVTHeader>
+    <LVTHeader :projectName="'LVTLearn'" :projectDocsLink="'https://lms.laravuetail.com/docs'"
+        :projectGithubRepo="'https://github.com/LaraVueTail/Learning-Management-System-LMS-Laravel-Vue-Tailwind-Inertia-VILT-Stack'">
+    </LVTHeader>
     <Header></Header>
     <div class="bg-gray-50 dark:bg-gray-900">
         <slot></slot>
