@@ -1,6 +1,6 @@
 <template>
     <Notification></Notification>
-    <LVTHeader :projectName="'LMS'"></LVTHeader>
+    <LVTHeader :projectName="'LVTLearn'"></LVTHeader>
     <Header></Header>
     <div class="bg-gray-50 dark:bg-gray-900">
         <slot></slot>

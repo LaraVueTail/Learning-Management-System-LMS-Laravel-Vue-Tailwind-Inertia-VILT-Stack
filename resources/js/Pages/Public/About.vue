@@ -6,7 +6,7 @@
             </h1>
             <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Seamless Online Learning
                 Experience: Access a user-friendly platform that simplifies your learning journey. Whether you're a student,
-                educator, or professional, MasterLearn offers an intuitive interface designed to enhance your educational
+                educator, or professional, LVTLearn offers an intuitive interface designed to enhance your educational
                 experience.
 
             </p>

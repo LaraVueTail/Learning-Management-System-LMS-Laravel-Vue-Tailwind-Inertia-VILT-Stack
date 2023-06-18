@@ -5,16 +5,16 @@
                 src="https://images.pexels.com/photos/4143791/pexels-photo-4143791.jpeg" alt="dashboard image" />
             <div class="mt-4 md:mt-0">
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                    Join the MasterLearn Community Today!
+                    Join the LVTLearn Community Today!
                 </h2>
                 <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
                 <ul class="list-disc mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
-                    <li> Trusted by Institutions: MasterLearn has partnered with
+                    <li> Trusted by Institutions: LVTLearn has partnered with
                         renowned educational institutions worldwide, ensuring
                         credibility and quality in our courses.</li>
                     <li> Positive Student
                         Feedback: Thousands of satisfied learners have benefited
-                        from MasterLearn's comprehensive learning resources, giving
+                        from LVTLearn's comprehensive learning resources, giving
                         us an average rating of 4.8 out of 5.</li>
                     <li> Secure and Reliable:
                         Your data privacy and security are our top priorities. Rest

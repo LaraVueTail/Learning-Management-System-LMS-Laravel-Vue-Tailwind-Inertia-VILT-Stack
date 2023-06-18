@@ -3,8 +3,8 @@
         <nav class="bg-blue-100 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                 <Link href="https://flowbite.com" class="flex items-center">
-                <img src="/Sitelogo/logo.svg" class="mr-2 h-10 sm:h-10" alt="Logo" />
-                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">MasterLearn</span>
+                <img :src="$page.props.app_url + 'Sitelogo/logo.svg'" class="mr-2 h-10 sm:h-10" alt="Logo" />
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">LVTLearn</span>
                 </Link>
                 <div class="flex items-center lg:order-2">
                     <Link :href="($page.props.is_student_logged || $page.props.is_teacher_logged) ? '/dashboard' : '/login'"

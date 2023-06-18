@@ -1,6 +1,6 @@
 <template>
     <Notification></Notification>
-    <NavSidebar :siteLogo="'/Sitelogo/logo.svg'" :siteName="'MasterLearn'"
+    <NavSidebar :siteLogo="$page.props.app_url + 'Sitelogo/logo.svg'" :siteName="'LVTLearn'"
         :userAvatar="$page.props.admin_user.avatar_url" :userName="$page.props.admin_user.full_name"
         :userEmail="$page.props.admin_user.email" :navMenu="navMenu" :sidebarMenu="sidebarMenu">
         <div class="md:px-4 py-4 sm:ml-64 dark:bg-gray-900">

@@ -6,7 +6,7 @@
                     Learning Experience</h2>
                 <p class="mb-4">Access a user-friendly platform that simplifies your
                     learning journey. Whether you're a student, educator, or
-                    professional, MasterLearn offers an intuitive interface
+                    professional, LVTLearn offers an intuitive interface
                     designed to enhance your educational experience.</p>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
