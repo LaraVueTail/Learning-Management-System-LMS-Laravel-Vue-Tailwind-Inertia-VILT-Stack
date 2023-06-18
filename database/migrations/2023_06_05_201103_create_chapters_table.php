@@ -3,8 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
-
 
 return new class extends Migration
 {
@@ -18,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('video');
-            $table->text('description')->unique();
+            $table->text('description');
             $table->string('thumbnail')->nullable();
             $table->foreignId('course_id');
             $table->timestamps();

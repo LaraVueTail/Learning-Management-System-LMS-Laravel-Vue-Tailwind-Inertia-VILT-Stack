@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('short_description');
             $table->string('slug')->unique();
-            $table->text('description')->unique();
+            $table->text('description');
             $table->string('thumbnail')->nullable();
             $table->foreignId('teacher_id');
             $table->timestamps();
