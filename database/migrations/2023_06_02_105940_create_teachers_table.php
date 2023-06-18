@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('dob');
             $table->string('designation');
             $table->string('phone_number');
-            $table->text('slug')->unique();
+            $table->string('slug')->unique();
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->boolean('is_admin')->default(false);
